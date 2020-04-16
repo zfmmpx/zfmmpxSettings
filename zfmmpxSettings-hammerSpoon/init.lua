@@ -933,10 +933,6 @@ hs.hotkey.bind({"alt"}, "R", function()
         [[ tell application "iTerm"
             reopen
             activate
-            tell current session of current window
-                set cmd to "clear"
-                write text cmd
-            end tell
         end tell
         ]]
     )
