@@ -578,7 +578,7 @@ function tile(screenName, myAspect, keepOrder, keepScale)
     if (myAspect) then
         desiredAspect = myAspect
     end
-    hs.window.tiling.tileWindows(wins, frame, desiredAspect, keepOrder, keepScale)
+    hs.window.tiling.tileWindows(wins, frame, 1, keepOrder, keepScale)
     outlineFocusedWindow(f)
 end
 
@@ -627,38 +627,42 @@ end
 
 -- 向右循环选择窗口
 function switchWindowHorizontalRight()
-    if (hs.window.focusedWindow():focusWindowEast(winf_noInv:getWindows(), nil, true)) then
-    else
-        local windowsToWest = hs.window.focusedWindow():windowsToWest(winf_noInv:getWindows(), nil, true)
-        windowsToWest[#windowsToWest]:focus()
-    end
+    hs.window.filter.focusEast()
+    -- if (hs.window.focusedWindow():focusWindowEast(winf_noInv:getWindows(), true, true)) then
+    -- else
+    --     -- local windowsToWest = hs.window.focusedWindow():windowsToWest(winf_noInv:getWindows(), true, true)
+    --     -- windowsToWest[#windowsToWest]:focus()
+    -- end
 end
 
 -- 向左循环选择窗口
 function switchWindowHorizontalLeft()
-    if (hs.window.focusedWindow():focusWindowWest(winf_noInv:getWindows(), nil, true)) then
-    else
-        local windowsToEast = hs.window.focusedWindow():windowsToEast(winf_noInv:getWindows(), nil, true)
-        windowsToEast[#windowsToEast]:focus()
-    end
+    hs.window.filter.focusWest()
+    -- if (hs.window.focusedWindow():focusWindowWest(winf_noInv:getWindows(), nil, true)) then
+    -- else
+    --     local windowsToEast = hs.window.focusedWindow():windowsToEast(winf_noInv:getWindows(), nil, true)
+    --     windowsToEast[#windowsToEast]:focus()
+    -- end
 end
 
 -- 向上循环选择窗口
 function switchWindowVerticalUp()
-    if (hs.window.focusedWindow():focusWindowSouth(winf_noInv:getWindows(), nil, true)) then
-    else
-        local windowsToNorth = hs.window.focusedWindow():windowsToNorth(winf_noInv:getWindows(), nil, true)
-        windowsToNorth[#windowsToNorth]:focus()
-    end
+    hs.window.filter.focusNorth()
+    -- if (hs.window.focusedWindow():focusWindowNorth(winf_noInv:getWindows(), nil, true)) then
+    -- else
+    --     -- local windowsToSouth = hs.window.focusedWindow():windowsToSouth(winf_noInv:getWindows(), nil, true)
+    --     -- windowsToSouth[#windowsToSouth]:focus()
+    -- end
 end
 
--- 向上循环选择窗口
+-- 向下循环选择窗口
 function switchWindowVerticalDown()
-    if (hs.window.focusedWindow():focusWindowSouth(winf_noInv:getWindows(), nil, true)) then
-    else
-        local windowsToSouth = hs.window.focusedWindow():windowsToSouth(winf_noInv:getWindows(), nil, true)
-        windowsToSouth[#windowsToSouth]:focus()
-    end
+    hs.window.filter.focusSouth()
+    -- if (hs.window.focusedWindow():focusWindowSouth(winf_noInv:getWindows(), nil, true)) then
+    -- else
+    --     -- local windowsToNorth = hs.window.focusedWindow():windowsToNorth(winf_noInv:getWindows(), nil, true)
+    --     -- windowsToNorth[#windowsToNorth]:focus()
+    -- end
 end
 
 
@@ -669,35 +673,19 @@ end
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f16", layoutHalfOrFull) -- delete_or_backspace
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", function() tile("MX27AQ", 1, nil) tile("U2790B", 1, nil) tile("Color LCD", 1, nil) end) -- escape
 
--- 移动窗口
-hs.hotkey.bind({"cmd"}, "F16", moveLeft, nil, moveLeft) -- 左
-hs.hotkey.bind({"cmd"}, "F17", moveDown, nil, moveDown) -- 下
-hs.hotkey.bind({"cmd"}, "F18", moveUp, nil, moveUp) -- 上
-hs.hotkey.bind({"cmd"}, "F19", moveRight, nil, moveRight) -- 右
-
-
 
 -- 切换窗口
-hs.hotkey.bind({"cmd", "alt"}, "F16", function() -- 左
-    hs.window.focusedWindow():focusWindowWest(winf_noInv:getWindows(), nil, true)
-end)
-hs.hotkey.bind({"cmd", "alt"}, "F17", function() -- 下
-    hs.window.focusedWindow():focusWindowSouth(winf_noInv:getWindows(), nil, true)
-end)
-hs.hotkey.bind({"cmd", "alt"}, "F18", function() -- 上
-    hs.window.focusedWindow():focusWindowNorth(winf_noInv:getWindows(), nil, true)
-end)
-hs.hotkey.bind({"cmd", "alt"}, "F19", function() -- 右
-    hs.window.focusedWindow():focusWindowEast(winf_noInv:getWindows(), nil, true)
-end)
-
-hs.hotkey.bind({}, "F16", switchWindowHorizontalLeft)
-hs.hotkey.bind({}, "F19", switchWindowHorizontalRight)
-hs.hotkey.bind({}, "F17", switchWindowVerticalDown)
-hs.hotkey.bind({}, "F18", switchWindowVerticalUp)
+hs.hotkey.bind({}, "F16", switchWindowHorizontalLeft) -- 左
+hs.hotkey.bind({}, "F19", switchWindowHorizontalRight) -- 下
+hs.hotkey.bind({}, "F17", switchWindowVerticalDown) -- 上
+hs.hotkey.bind({}, "F18", switchWindowVerticalUp) -- 右
 
 
-
+-- 移动窗口
+hs.hotkey.bind({"cmd"}, "F16", moveLeft, nil, moveLeft)
+hs.hotkey.bind({"cmd"}, "F17", moveDown, nil, moveDown)
+hs.hotkey.bind({"cmd"}, "F18", moveUp, nil, moveUp)
+hs.hotkey.bind({"cmd"}, "F19", moveRight, nil, moveRight)
 
 
 -- 当前app放到MX27AQ,MX27AQ的窗口都放到Color LCD
@@ -706,23 +694,6 @@ hs.hotkey.bind({"alt"}, "f16", function() collectAppToScreen("MX27AQ") end)
 hs.hotkey.bind({"alt"}, "f19", function() collectAppToScreen("U2790B") end)
 -- 当前app放到Color LCD,Color LCD的窗口都放到华硕
 hs.hotkey.bind({"alt"}, "f17", function() collectAppToScreen("Color LCD") end)
-
-
-
-
--- hs.hotkey.bind({"ctrl", "cmd"}, "f16", maxInScreen) -- f4
-
--- 整齐所有窗口
--- hs.hotkey.bind({"alt"}, "f19", function() tile("MX27AQ") tile("U2790B") tile("Color LCD") end) -- f7
--- 所有无关紧要的app(或者不规则的app)全部都放到Color LCD
--- hs.hotkey.bind({"ctrl", "alt", "cmd", "shift"}, "5", function() -- hyper+5
-    -- for i,win in ipairs(winf_IrregularNo:getWindows()) do
-    --     win:moveOneScreenNorth(true)
-    -- end
-    -- local screen = hs.screen.find("Color LCD")
-    -- local frame = screen:frame()
-    -- hs.window.tiling.tileWindows(winf_Irregular:getWindows(), frame, 1, false, false)
--- end)
 
 
 
@@ -762,6 +733,17 @@ end)
 
 
 
+-- 整齐所有窗口
+-- hs.hotkey.bind({"alt"}, "f19", function() tile("MX27AQ") tile("U2790B") tile("Color LCD") end) -- f7
+-- 所有无关紧要的app(或者不规则的app)全部都放到Color LCD
+-- hs.hotkey.bind({"ctrl", "alt", "cmd", "shift"}, "5", function() -- hyper+5
+    -- for i,win in ipairs(winf_IrregularNo:getWindows()) do
+    --     win:moveOneScreenNorth(true)
+    -- end
+    -- local screen = hs.screen.find("Color LCD")
+    -- local frame = screen:frame()
+    -- hs.window.tiling.tileWindows(winf_Irregular:getWindows(), frame, 1, false, false)
+-- end)
 
 
 
@@ -773,6 +755,9 @@ end)
 -- hs.hotkey.bind({"alt"}, "F19", function() hs.window.focusedWindow():focusWindowEast(winf_twoScreen:getWindows(), nil, true) end) -- f2
 
 -- 竖直排列所有窗口
+
+
+
 
 
 
