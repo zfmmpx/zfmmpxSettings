@@ -13,9 +13,7 @@
     "Method": [
       {
         "doc": "Redetect the active interface, darkmode …And redraw everything.",
-        "stripped_doc": [
-          "Redetect the active interface, darkmode …And redraw everything."
-        ],
+        "stripped_doc": ["Redetect the active interface, darkmode …And redraw everything."],
         "def": "SpeedMenu:rescan()",
         "desc": "Redetect the active interface, darkmode …And redraw everything.",
         "notes": [],
@@ -31,9 +29,7 @@
     "items": [
       {
         "doc": "Redetect the active interface, darkmode …And redraw everything.",
-        "stripped_doc": [
-          "Redetect the active interface, darkmode …And redraw everything."
-        ],
+        "stripped_doc": ["Redetect the active interface, darkmode …And redraw everything."],
         "def": "SpeedMenu:rescan()",
         "desc": "Redetect the active interface, darkmode …And redraw everything.",
         "notes": [],

@@ -1,43 +1,43 @@
 <script>
   // 一般规则的键
   var d_mo_data = [
-    ["h", "left_arrow"],
-    ["j", "down_arrow"],
-    ["k", "up_arrow"],
-    ["l", "right_arrow"],
-    ["m", "delete_forward"],
-    ["n", "delete_or_backspace"],
-    ["1", "1", ["left_shift"]],
-    ["2", "2", ["left_shift"]],
-    ["3", "3", ["left_shift"]],
-    ["4", "4", ["left_shift"]],
-    ["5", "5", ["left_shift"]],
-    ["6", "6", ["left_shift"]],
-    ["7", "7", ["left_shift"]],
-    ["8", "8", ["left_shift"]],
-    ["9", "9", ["left_shift"]],
-    ["0", "0", ["left_shift"]],
-    ["grave_accent_and_tilde", "grave_accent_and_tilde", ["left_shift"]],
-    ["hyphen", "hyphen", ["left_shift"]],
-    ["equal_sign", "equal_sign", ["left_shift"]],
-    ["open_bracket", "open_bracket", ["left_shift"]],
-    ["close_bracket", "close_bracket", ["left_shift"]],
-    ["backslash", "backslash", ["left_shift"]],
-    ["semicolon", "semicolon", ["left_shift"]],
-    ["quote", "quote", ["left_shift"]],
-    ["comma", "comma", ["left_shift"]],
-    ["period", "period", ["left_shift"]],
-    ["slash", "slash", ["left_shift"]],
-  ];
+    ['h', 'left_arrow'],
+    ['j', 'down_arrow'],
+    ['k', 'up_arrow'],
+    ['l', 'right_arrow'],
+    ['m', 'delete_forward'],
+    ['n', 'delete_or_backspace'],
+    ['1', '1', ['left_shift']],
+    ['2', '2', ['left_shift']],
+    ['3', '3', ['left_shift']],
+    ['4', '4', ['left_shift']],
+    ['5', '5', ['left_shift']],
+    ['6', '6', ['left_shift']],
+    ['7', '7', ['left_shift']],
+    ['8', '8', ['left_shift']],
+    ['9', '9', ['left_shift']],
+    ['0', '0', ['left_shift']],
+    ['grave_accent_and_tilde', 'grave_accent_and_tilde', ['left_shift']],
+    ['hyphen', 'hyphen', ['left_shift']],
+    ['equal_sign', 'equal_sign', ['left_shift']],
+    ['open_bracket', 'open_bracket', ['left_shift']],
+    ['close_bracket', 'close_bracket', ['left_shift']],
+    ['backslash', 'backslash', ['left_shift']],
+    ['semicolon', 'semicolon', ['left_shift']],
+    ['quote', 'quote', ['left_shift']],
+    ['comma', 'comma', ['left_shift']],
+    ['period', 'period', ['left_shift']],
+    ['slash', 'slash', ['left_shift']],
+  ]
 
   var v_mo_data = [
-    ["h", "left_arrow", ["left_shift"]],
-    ["j", "down_arrow", ["left_shift"]],
-    ["k", "up_arrow", ["left_shift"]],
-    ["l", "right_arrow", ["left_shift"]],
-    ["left_command", "left_command"],
-    ["right_command", "left_command"],
-  ];
+    ['h', 'left_arrow', ['left_shift']],
+    ['j', 'down_arrow', ['left_shift']],
+    ['k', 'up_arrow', ['left_shift']],
+    ['l', 'right_arrow', ['left_shift']],
+    ['left_command', 'left_command'],
+    ['right_command', 'left_command'],
+  ]
 
   var disable_settings_data = [
     // ["delete_or_backspace"],
@@ -56,202 +56,199 @@
     // ["comma", "shift"],
     // ["period", "shift"],
     // ["slash", "shift"]
-  ];
+  ]
 
   var normal_characters_data = [
-    "a",
-    "b",
-    "c",
-    "e",
-    "f",
-    "g",
-    "i",
-    "o",
-    "p",
-    "q",
-    "r",
-    "t",
-    "u",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
+    'a',
+    'b',
+    'c',
+    'e',
+    'f',
+    'g',
+    'i',
+    'o',
+    'p',
+    'q',
+    'r',
+    't',
+    'u',
+    'w',
+    'x',
+    'y',
+    'z',
+  ]
+  var a = [1, 2]
+  var b = (a, b, fewfwefwefwefwe, fewfwefwewefwefwef, jfieowjfoewjfowiejf, jfioewjfowi) => {}
 
   // 特殊规则
   var dKey = {
-    type: "basic",
+    type: 'basic',
     from: {
-      key_code: "d",
+      key_code: 'd',
       modifiers: {
-        optional: ["any"],
+        optional: ['any'],
       },
     },
     to: [
       {
         set_variable: {
-          name: "d_mo",
+          name: 'd_mo',
           value: 1,
         },
       },
     ],
     to_if_alone: [
       {
-        key_code: "d",
+        key_code: 'd',
       },
     ],
     to_after_key_up: [
       {
         set_variable: {
-          name: "d_mo",
+          name: 'd_mo',
           value: 0,
         },
       },
     ],
-  };
+  }
 
   var sKey = {
-    type: "basic",
+    type: 'basic',
     from: {
-      key_code: "s",
+      key_code: 's',
       modifiers: {
-        optional: ["any"],
+        optional: ['any'],
       },
     },
     to: [
       {
-        key_code: "left_option",
+        key_code: 'left_option',
       },
     ],
     conditions: [
       {
-        type: "variable_if",
-        name: "d_mo",
+        type: 'variable_if',
+        name: 'd_mo',
         value: 1,
       },
     ],
-  };
+  }
 
   var vKey = {
-    type: "basic",
+    type: 'basic',
     from: {
-      key_code: "v",
+      key_code: 'v',
       modifiers: {
-        optional: ["any"],
+        optional: ['any'],
       },
     },
     to: [
       {
         set_variable: {
-          name: "v_mo",
+          name: 'v_mo',
           value: 1,
         },
       },
     ],
     to_if_alone: [
       {
-        key_code: "vk_none",
+        key_code: 'vk_none',
       },
     ],
     to_after_key_up: [
       {
         set_variable: {
-          name: "v_mo",
+          name: 'v_mo',
           value: 0,
         },
       },
     ],
     conditions: [
       {
-        type: "variable_if",
-        name: "d_mo",
+        type: 'variable_if',
+        name: 'd_mo',
         value: 1,
       },
     ],
-  };
+  }
 
   var vJ = {
-    type: "basic",
+    type: 'basic',
     from: {
-      key_code: "j",
+      key_code: 'j',
       modifiers: {
-        mandatory: ["option"],
+        mandatory: ['option'],
       },
     },
     to: [
       {
-        key_code: "down_arrow",
-        modifiers: ["left_shift"],
+        key_code: 'down_arrow',
+        modifiers: ['left_shift'],
       },
     ],
     to_after_key_up: [
       {
-        key_code: "vk_none",
+        key_code: 'vk_none',
       },
     ],
     conditions: [
       {
-        type: "variable_if",
-        name: "v_mo",
+        type: 'variable_if',
+        name: 'v_mo',
         value: 1,
       },
     ],
-  };
+  }
 
   var vK = {
-    type: "basic",
+    type: 'basic',
     from: {
-      key_code: "k",
+      key_code: 'k',
       modifiers: {
-        mandatory: ["option"],
+        mandatory: ['option'],
       },
     },
     to: [
       {
-        key_code: "up_arrow",
-        modifiers: ["left_shift"],
+        key_code: 'up_arrow',
+        modifiers: ['left_shift'],
       },
     ],
     to_after_key_up: [
       {
-        key_code: "vk_none",
+        key_code: 'vk_none',
       },
     ],
     conditions: [
       {
-        type: "variable_if",
-        name: "v_mo",
+        type: 'variable_if',
+        name: 'v_mo',
         value: 1,
       },
     ],
-  };
+  }
 
   var vDisableOtherKey = {
-    type: "basic",
+    type: 'basic',
     from: {
-      any: "key_code",
+      any: 'key_code',
     },
     to: [
       {
-        key_code: "vk_none",
+        key_code: 'vk_none',
       },
     ],
     conditions: [
       {
-        type: "variable_if",
-        name: "v_mo",
+        type: 'variable_if',
+        name: 'v_mo',
         value: 1,
       },
     ],
-  };
+  }
 
   // 所有 一般规则的键 的集合
-  var whole_data = [
-    d_mo_data,
-    v_mo_data,
-    disable_settings_data,
-    normal_characters_data,
-  ];
+  var whole_data = [d_mo_data, v_mo_data, disable_settings_data, normal_characters_data]
 
   // 所有 一般规则的生成方程 的集合
   var funcArr = [
@@ -259,76 +256,85 @@
     generate_v_mo_single_rule,
     generate_disable_settings_single_rule,
     generate_normal_characters_single_rule,
-  ];
+  ]
 
   // 总的生成方程(包括一般规则和特殊规则), 需要区分顺序,顺序是: dKey => sKey => vKey =>  vJ => vK => d_mo的所有规则 => v_mo的所有规则 => vDisableOtherKey => 所有的disable_settings => 所有的normal_character
   function generate() {
     var result = [],
-      singleRule = [];
-    result.push(dKey, sKey, vKey, vJ, vK);
+      singleRule = []
+    result.push(dKey, sKey, vKey, vJ, vK)
     for (var j = 0; j < whole_data.length; j++) {
       for (var i = 0; i < whole_data[j].length; i++) {
-        singleRule = funcArr[j](
-          whole_data[j][i][0],
-          whole_data[j][i][1],
-          whole_data[j][i][2]
-        );
-        result.push(singleRule);
+        singleRule = funcArr[j](whole_data[j][i][0], whole_data[j][i][1], whole_data[j][i][2])
+        result.push(singleRule)
       }
       if (j == 1) {
-        result.push(vDisableOtherKey);
+        result.push(vDisableOtherKey)
       }
     }
-    return result;
+    return result
   }
 
   // 一般规则的生成方程
-  function generate_d_mo_single_rule(
-    from_key_code,
-    to_key_code,
-    to_modifier_key_code_array
-  ) {
+  function generate_d_mo_single_rule(from_key_code, to_key_code, to_modifier_key_code_array) {
     var toArr = [],
-      conditionsArr = [];
+      conditionsArr = []
     if (to_modifier_key_code_array) {
       toArr = [
-        { key_code: to_key_code, modifiers: to_modifier_key_code_array },
-      ];
+        {
+          key_code: to_key_code,
+          modifiers: to_modifier_key_code_array,
+        },
+      ]
     } else {
-      toArr = [{ key_code: to_key_code }];
+      toArr = [{ key_code: to_key_code }]
     }
 
-    if (from_key_code == "m" || from_key_code == "n") {
-      conditionsArr = [{ type: "variable_if", name: "d_mo", value: 1 }];
+    if (from_key_code == 'm' || from_key_code == 'n') {
+      conditionsArr = [
+        {
+          type: 'variable_if',
+          name: 'd_mo',
+          value: 1,
+        },
+      ]
     } else {
       conditionsArr = [
-        { type: "variable_if", name: "d_mo", value: 1 },
-        { type: "variable_if", name: "v_mo", value: 0 },
-      ];
+        {
+          type: 'variable_if',
+          name: 'd_mo',
+          value: 1,
+        },
+        {
+          type: 'variable_if',
+          name: 'v_mo',
+          value: 0,
+        },
+      ]
     }
 
     var result = {
-      type: "basic",
+      type: 'basic',
       from: {
         key_code: from_key_code,
-        modifiers: { optional: ["any"] },
+        modifiers: {
+          optional: ['any'],
+        },
       },
       to: toArr,
       conditions: conditionsArr,
-    };
-    return result;
+    }
+    return result
   }
 
-  function generate_v_mo_single_rule(
-    from_key_code,
-    to_key_code,
-    to_modifier_key_code_array
-  ) {
+  function generate_v_mo_single_rule(from_key_code, to_key_code, to_modifier_key_code_array) {
     var result = {
-      type: "basic",
+      type: 'basic',
       from: {
         key_code: from_key_code,
-        modifiers: { optional: ["any"] },
+        modifiers: {
+          optional: ['any'],
+        },
       },
       to: [
         {
@@ -338,89 +344,88 @@
       ],
       to_after_key_up: [
         {
-          key_code: "vk_none",
+          key_code: 'vk_none',
         },
       ],
       conditions: [
         {
-          type: "variable_if",
-          name: "v_mo",
+          type: 'variable_if',
+          name: 'v_mo',
           value: 1,
         },
       ],
-    };
-    return result;
+    }
+    return result
   }
 
-  function generate_disable_settings_single_rule(
-    from_key_code,
-    from_modifier_key_code_array
-  ) {
-    var modifiersObj = {};
+  function generate_disable_settings_single_rule(from_key_code, from_modifier_key_code_array) {
+    var modifiersObj = {}
     if (from_modifier_key_code_array) {
       modifiersObj = {
-        optional: ["caps_lock"],
+        optional: ['caps_lock'],
         mandatory: from_modifier_key_code_array,
-      };
+      }
     } else {
       modifiersObj = {
-        optional: ["caps_lock"],
-      };
+        optional: ['caps_lock'],
+      }
     }
     var result = {
-      type: "basic",
+      type: 'basic',
       from: {
         key_code: from_key_code,
         modifiers: modifiersObj,
       },
       to: [
         {
-          key_code: "vk_none",
+          key_code: 'vk_none',
         },
       ],
-    };
-    return result;
+    }
+    return result
   }
 
   function generate_normal_characters_single_rule(character_code) {
     var result = {
-      type: "basic",
+      type: 'basic',
       from: {
         key_code: character_code,
-        modifiers: { optional: ["any"] },
+        modifiers: {
+          optional: ['any'],
+        },
       },
       to: [
         {
-          key_code: "d",
+          key_code: 'd',
         },
         {
           key_code: character_code,
         },
         {
-          key_code: "vk_none",
+          key_code: 'vk_none',
         },
       ],
       conditions: [
         {
-          type: "variable_if",
-          name: "d_mo",
+          type: 'variable_if',
+          name: 'd_mo',
           value: 1,
         },
       ],
-    };
-    return result;
+    }
+    return result
   }
 
   var wholeRules = {
-    title: "2 d_mo",
+    title: '2 d_mo',
     rules: [
       {
-        description: "2 d_mo",
+        description: '2 d_mo',
         manipulators: generate(),
       },
     ],
-  };
+  }
 
-  var jsonString = JSON.stringify(wholeRules);
-  document.write(jsonString);
+  var jsonString = JSON.stringify(wholeRules)
+  document.write(jsonString)
 </script>

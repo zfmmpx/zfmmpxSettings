@@ -1,9 +1,9 @@
 <script>
   var data = [
-    ["left_arrow", "f16"],
-    ["down_arrow", "f17"],
-    ["up_arrow", "f18"],
-    ["right_arrow", "f19"],
+    ['left_arrow', 'f16'],
+    ['down_arrow', 'f17'],
+    ['up_arrow', 'f18'],
+    ['right_arrow', 'f19'],
 
     // ['f1', 'f17', ['left_control']],
     // ['f2', 'f18', ['left_control']],
@@ -18,33 +18,29 @@
     // ['f12', '2', ['left_shift', 'left_command']],
 
     // 新的
-    [
-      "delete_or_backspace",
-      "f16",
-      ["left_shift", "left_option", "left_command"],
-    ],
-    ["escape", "f19", ["left_shift", "left_option", "left_command"]],
-  ];
+    ['delete_or_backspace', 'f16', ['left_shift', 'left_option', 'left_command']],
+    ['escape', 'f19', ['left_shift', 'left_option', 'left_command']],
+  ]
 
   function generate() {
     var result = [],
-      singleRule = [];
+      singleRule = []
     for (var i = 0; i < data.length; i++) {
-      singleRule = generate_single_rule(data[i][0], data[i][1], data[i][2]);
-      result.push(singleRule);
+      singleRule = generate_single_rule(data[i][0], data[i][1], data[i][2])
+      result.push(singleRule)
     }
-    return result;
+    return result
   }
 
   function generate_single_rule(from_key_code, to_key_code, to_modifier_arr) {
-    var result = [];
-    if (from_key_code == "esacpe") {
+    var result = []
+    if (from_key_code == 'esacpe') {
       result = {
-        type: "basic",
+        type: 'basic',
         from: {
           key_code: from_key_code,
           modifiers: {
-            optional: ["caps_lock"],
+            optional: ['caps_lock'],
           },
         },
         to: [
@@ -52,14 +48,14 @@
             key_code: to_key_code,
           },
         ],
-      };
+      }
     } else if (to_modifier_arr) {
       var result = {
-        type: "basic",
+        type: 'basic',
         from: {
           key_code: from_key_code,
           modifiers: {
-            optional: ["caps_lock"],
+            optional: ['caps_lock'],
           },
         },
         to: [
@@ -68,14 +64,14 @@
             modifiers: to_modifier_arr,
           },
         ],
-      };
+      }
     } else {
       var result = {
-        type: "basic",
+        type: 'basic',
         from: {
           key_code: from_key_code,
           modifiers: {
-            optional: ["any"],
+            optional: ['any'],
           },
         },
         to: [
@@ -83,20 +79,20 @@
             key_code: to_key_code,
           },
         ],
-      };
+      }
     }
-    return result;
+    return result
   }
 
   var wholeRules = {
-    title: "4 方向键escape键以及功能键(f键)修改",
+    title: '4 方向键escape键以及功能键(f键)修改',
     rules: [
       {
-        description: "4 方向键escape键以及功能键(f键)修改",
+        description: '4 方向键escape键以及功能键(f键)修改',
         manipulators: generate(),
       },
     ],
-  };
-  var jsonString = JSON.stringify(wholeRules);
-  document.write(jsonString);
+  }
+  var jsonString = JSON.stringify(wholeRules)
+  document.write(jsonString)
 </script>
