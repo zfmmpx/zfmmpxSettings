@@ -1,0 +1,112 @@
+<script>
+    var data = [
+        ["left_arrow", "f16"],
+        ["down_arrow", "f17"],
+        ["up_arrow", "f18"],
+        ["right_arrow", "f19"],
+
+        ["escape", "f16", ["left_control"]],
+        ["f1", "f17", ["left_control"]],
+        ["f2", "f18", ["left_control"]],
+        ["f3", "f19", ["left_control"]],
+
+        // ["f4", "f16", ["left_control", "left_command"]],
+
+        ["f5", "left_arrow", ["left_command", "left_option"]],
+        ["f6", "right_arrow", ["left_command", "left_option"]],
+        // ["f5", "f17", ["left_control"]],
+        // ["f6", "f18", ["left_control"]],
+        ["f7", "f16", ["left_control", "left_option"]],
+        ["f8", "f17", ["left_control", "left_option"]],
+        ["f9", "f18", ["left_control", "left_option"]],
+
+        ["f10", "4", ["left_shift", "left_command"]],
+        ["f11", "1", ["left_shift", "left_command"]],
+        ["f12", "2", ["left_shift", "left_command"]],
+        // ["f10", "f16", ["left_shift"]],
+        // ["f11", "f16", ["left_option"]],
+        // ["f12", "f19", ["left_shift"]],
+    ]
+
+
+    function generate() {
+        var result = [], singleRule = [];
+        for (var i = 0; i < data.length; i++) {
+            singleRule = generate_single_rule(data[i][0], data[i][1], data[i][2]);
+            result.push(singleRule)
+        }
+        return result;
+    }
+
+    function generate_single_rule(from_key_code, to_key_code, to_modifier_arr) {
+        var result = [];
+        if (from_key_code == "esacpe") {
+            result = {
+                "type": "basic",
+                "from": {
+                    "key_code": from_key_code,
+                    "modifiers": {
+                        "optional": [
+                            "caps_lock"
+                        ]
+                    }
+                },
+                "to": [
+                    {
+                        "key_code": to_key_code
+                    }
+                ]
+            }
+        } else if (to_modifier_arr) {
+            var result = {
+                "type": "basic",
+                "from": {
+                    "key_code": from_key_code,
+                    "modifiers": {
+                        "optional": [
+                            "caps_lock"
+                        ]
+                    }
+                },
+                "to": [
+                    {
+                        "key_code": to_key_code,
+                        "modifiers": to_modifier_arr
+                    }
+                ]
+            }
+        } else {
+            var result = {
+                "type": "basic",
+                "from": {
+                    "key_code": from_key_code,
+                    "modifiers": {
+                        "optional": [
+                            "any"
+                        ]
+                    }
+                },
+                "to": [
+                    {
+                        "key_code": to_key_code
+                    }
+                ]
+            }
+        }
+        return result;
+    }
+
+
+    var wholeRules = {
+        "title": "4 方向键escape键以及功能键(f键)修改",
+        "rules": [
+            {
+                "description": "4 方向键escape键以及功能键(f键)修改",
+                "manipulators": generate()
+            }
+        ]
+    };
+    var jsonString = JSON.stringify(wholeRules);
+    document.write(jsonString);
+
+</script>

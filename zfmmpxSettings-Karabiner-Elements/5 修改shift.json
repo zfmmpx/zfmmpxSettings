@@ -1,0 +1,60 @@
+{
+    "title": "5 修改shift",
+    "rules": [
+        {
+            "description": "5 修改shift",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "left_shift",
+                        "modifiers": {
+                            "optional": [
+                                "caps_lock"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_shift"
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "key_code": "f16",
+                            "modifiers": [
+                                "left_control",
+                                "left_command"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "right_shift",
+                        "modifiers": {
+                            "optional": [
+                                "caps_lock"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_shift"
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "key_code": "f19",
+                            "modifiers": [
+                                "left_control",
+                                "left_option"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
