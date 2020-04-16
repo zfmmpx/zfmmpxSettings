@@ -1,128 +1,164 @@
 <script>
+  var c_mo_data = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "0",
+    "grave_accent_and_tilde",
+    "hyphen",
+    "equal_sign",
+    "open_bracket",
+    "close_bracket",
+    "backslash",
+    "semicolon",
+    "quote",
+    "comma",
+    "period",
+    "slash",
+  ];
 
+  var c_mo_number = [
+    // "1", "2", "3", "4", "5"
+  ];
 
-    var c_mo_data = [
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-        "1", "2", "3", "4", "5",
-        "6", "7", "8", "9", "0", "grave_accent_and_tilde", "hyphen", "equal_sign", "open_bracket", "close_bracket", "backslash", "semicolon", "quote", "comma", "period", "slash"
-    ]
-
-    var c_mo_number = [
-        // "1", "2", "3", "4", "5"
-    ]
-
-    var capsKey = {
-        "type": "basic",
-        "from": {
-            "key_code": "caps_lock",
-            "modifiers": {
-                "optional": [
-                    "any"
-                ]
-            }
+  var capsKey = {
+    type: "basic",
+    from: {
+      key_code: "caps_lock",
+      modifiers: {
+        optional: ["any"],
+      },
+    },
+    to: [
+      {
+        set_variable: {
+          name: "c_mo",
+          value: 1,
         },
-        "to": [
-            {
-                "set_variable": {
-                    "name": "c_mo",
-                    "value": 1
-                }
-            }
-        ],
-        "to_if_alone": [
-            {
-                "key_code": "escape"
-            }
-        ],
-        "to_after_key_up": [
-            {
-                "set_variable": {
-                    "name": "c_mo",
-                    "value": 0
-                }
-            }
-        ]
+      },
+    ],
+    to_if_alone: [
+      {
+        key_code: "escape",
+      },
+    ],
+    to_after_key_up: [
+      {
+        set_variable: {
+          name: "c_mo",
+          value: 0,
+        },
+      },
+    ],
+  };
+
+  function generate() {
+    var result = [],
+      singleRule = [];
+    result.push(capsKey);
+    for (var i = 0; i < c_mo_data.length; i++) {
+      singleRule = generate_c_mo_single_rule(c_mo_data[i]);
+      result.push(singleRule);
     }
-
-
-    function generate() {
-        var result = [], singleRule = [];
-        result.push(capsKey);
-        for (var i = 0; i < c_mo_data.length; i++) {
-            singleRule = generate_c_mo_single_rule(c_mo_data[i]);
-            result.push(singleRule)
-        }
-        for (var i = 0; i < c_mo_number.length; i++) {
-            singleRule = generate_c_mo_number_rule(c_mo_number[i]);
-            result.push(singleRule)
-        }
-        return result;
+    for (var i = 0; i < c_mo_number.length; i++) {
+      singleRule = generate_c_mo_number_rule(c_mo_number[i]);
+      result.push(singleRule);
     }
+    return result;
+  }
 
-    function generate_c_mo_single_rule(from_key_code) {
-        var result = {
-            "type": "basic",
-            "from": {
-                "key_code": from_key_code
-            },
-            "to": [
-                {
-                    "key_code": from_key_code,
-                    "modifiers": [
-                        "left_shift"
-                    ]
-                }
-            ],
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "c_mo",
-                    "value": 1
-                }
-            ]
-        }
-        return result;
-    }
-
-    function generate_c_mo_number_rule(from_key_code) {
-        var result = {
-            "type": "basic",
-            "from": {
-                "key_code": from_key_code
-            },
-            "to": [
-                {
-                    "key_code": from_key_code,
-                    "modifiers": [
-                        "left_shift",
-                        "left_control",
-                        "left_option",
-                        "left_command"
-                    ]
-                }
-            ],
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "c_mo",
-                    "value": 1
-                }
-            ]
-        }
-        return result;
-    }
-
-
-    var wholeRules = {
-        "title": "1 c_mo",
-        "rules": [
-            {
-                "description": "1 c_mo",
-                "manipulators": generate()
-            }
-        ]
+  function generate_c_mo_single_rule(from_key_code) {
+    var result = {
+      type: "basic",
+      from: {
+        key_code: from_key_code,
+      },
+      to: [
+        {
+          key_code: from_key_code,
+          modifiers: ["left_shift"],
+        },
+      ],
+      conditions: [
+        {
+          type: "variable_if",
+          name: "c_mo",
+          value: 1,
+        },
+      ],
     };
-    var jsonString = JSON.stringify(wholeRules);
-    document.write(jsonString);
+    return result;
+  }
 
+  function generate_c_mo_number_rule(from_key_code) {
+    var result = {
+      type: "basic",
+      from: {
+        key_code: from_key_code,
+      },
+      to: [
+        {
+          key_code: from_key_code,
+          modifiers: [
+            "left_shift",
+            "left_control",
+            "left_option",
+            "left_command",
+          ],
+        },
+      ],
+      conditions: [
+        {
+          type: "variable_if",
+          name: "c_mo",
+          value: 1,
+        },
+      ],
+    };
+    return result;
+  }
+
+  var wholeRules = {
+    title: "1 c_mo",
+    rules: [
+      {
+        description: "1 c_mo",
+        manipulators: generate(),
+      },
+    ],
+  };
+  var jsonString = JSON.stringify(wholeRules);
+  document.write(jsonString);
 </script>

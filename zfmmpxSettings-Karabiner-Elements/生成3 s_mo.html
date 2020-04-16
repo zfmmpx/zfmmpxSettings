@@ -1,112 +1,136 @@
 <script>
+  var s_mo_data = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "grave_accent_and_tilde",
+  ];
 
-
-    var s_mo_data = [
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-        "1", "2", "3", "4", "5", "6", "grave_accent_and_tilde"
-    ]
-
-    var semiKey = {
-        "type": "basic",
-        "from": {
-            "key_code": "semicolon",
-            "modifiers": {
-                "optional": [
-                    "caps_lock"
-                ]
-            }
+  var semiKey = {
+    type: "basic",
+    from: {
+      key_code: "semicolon",
+      modifiers: {
+        optional: ["caps_lock"],
+      },
+    },
+    to: [
+      {
+        set_variable: {
+          name: "s_mo",
+          value: 1,
         },
-        "to": [
-            {
-                "set_variable": {
-                    "name": "s_mo",
-                    "value": 1
-                }
-            }
-        ],
-        "to_if_alone": [
-            {
-                "key_code": "semicolon"
-            }
-        ],
-        "to_after_key_up": [
-            {
-                "set_variable": {
-                    "name": "s_mo",
-                    "value": 0
-                }
-            }
-        ]
-    }
-
-    var spaceKey = {
-        "type": "basic",
-        "from": {
-            "key_code": "spacebar"
+      },
+    ],
+    to_if_alone: [
+      {
+        key_code: "semicolon",
+      },
+    ],
+    to_after_key_up: [
+      {
+        set_variable: {
+          name: "s_mo",
+          value: 0,
         },
-        "to": [
-            {
-                "key_code": "semicolon"
-            },
-            {
-                "key_code": "spacebar"
-            }
-        ],
-        "conditions": [
-            {
-                "type": "variable_if",
-                "name": "s_mo",
-                "value": 1
-            }
-        ]
+      },
+    ],
+  };
+
+  var spaceKey = {
+    type: "basic",
+    from: {
+      key_code: "spacebar",
+    },
+    to: [
+      {
+        key_code: "semicolon",
+      },
+      {
+        key_code: "spacebar",
+      },
+    ],
+    conditions: [
+      {
+        type: "variable_if",
+        name: "s_mo",
+        value: 1,
+      },
+    ],
+  };
+
+  function generate() {
+    var result = [],
+      singleRule = [];
+    result.push(semiKey, spaceKey);
+    for (var i = 0; i < s_mo_data.length; i++) {
+      singleRule = generate_s_mo_single_rule(s_mo_data[i]);
+      result.push(singleRule);
     }
+    return result;
+  }
 
-    function generate() {
-        var result = [], singleRule = [];
-        result.push(semiKey, spaceKey);
-        for (var i = 0; i < s_mo_data.length; i++) {
-            singleRule = generate_s_mo_single_rule(s_mo_data[i]);
-            result.push(singleRule)
-        }
-        return result;
-    }
-
-    function generate_s_mo_single_rule(from_key_code) {
-        var result = {
-            "type": "basic",
-            "from": {
-                "key_code": from_key_code
-            },
-            "to": [
-                {
-                    "key_code": from_key_code,
-                    "modifiers": [
-                        "left_shift"
-                    ]
-                }
-            ],
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "s_mo",
-                    "value": 1
-                }
-            ]
-        }
-        return result;
-    }
-
-
-    var wholeRules = {
-        "title": "3 s_mo",
-        "rules": [
-            {
-                "description": "3 s_mo",
-                "manipulators": generate()
-            }
-        ]
+  function generate_s_mo_single_rule(from_key_code) {
+    var result = {
+      type: "basic",
+      from: {
+        key_code: from_key_code,
+      },
+      to: [
+        {
+          key_code: from_key_code,
+          modifiers: ["left_shift"],
+        },
+      ],
+      conditions: [
+        {
+          type: "variable_if",
+          name: "s_mo",
+          value: 1,
+        },
+      ],
     };
-    var jsonString = JSON.stringify(wholeRules);
-    document.write(jsonString);
+    return result;
+  }
 
+  var wholeRules = {
+    title: "3 s_mo",
+    rules: [
+      {
+        description: "3 s_mo",
+        manipulators: generate(),
+      },
+    ],
+  };
+  var jsonString = JSON.stringify(wholeRules);
+  document.write(jsonString);
 </script>
