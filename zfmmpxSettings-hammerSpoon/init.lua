@@ -930,9 +930,15 @@ hs.hotkey.bind({"alt"}, "P", function()
 end)
 hs.hotkey.bind({"alt"}, "R", function()
     hs.applescript(
-        [[ tell application "Terminal"
-        activate
-        end tell ]]
+        [[ tell application "iTerm"
+            reopen
+            activate
+            tell current session of current window
+                set cmd to "clear"
+                write text cmd
+            end tell
+        end tell
+        ]]
     )
 end)
 hs.hotkey.bind({"alt"}, "H", function() hs.application.open("/Applications/HammerSpoon.app") end)
