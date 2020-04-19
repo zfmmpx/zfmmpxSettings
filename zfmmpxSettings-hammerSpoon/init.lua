@@ -179,27 +179,14 @@ function layoutHalfOrFull()
     local win = hs.window.focusedWindow() -- 获取当前窗口
     if (win) then
         local f = win:frame() -- 获得当前窗口的 h w x y
-        local screen = win:screen() -- 获得当前窗口所在的屏幕
-        local f_current = screen:frame() -- 获得当前屏幕的 h w x y
 
         f.x = f_current.x
         f.y = f_current.y
+        f.h = f_current.h
 
-        if (screen:name() == "MX27AQ" or screen:name() == "Color LCD" or screen:name() == "U2790B") then
-            if (f.w == math.floor(f_current.w / 2) and f.h == math.floor(f_current.h)) then
-                f.w = f_current.w
-            else
-                f.w = f_current.w / 2
-                f.h = f_current.h
-            end
-        -- elseif (screen:name() == "U2790B") then
-        --     if (f.w == math.floor(f_current.w) and f.h == math.floor(f_current.h / 2)) then
-        --         f.h = f_current.h
-        --     else
-        --         f.w = f_current.w
-        --         f.h = f_current.h / 2
-        --     end
-        end
+        -- lua的三元运算符参考：https://www.runoob.com/w3cnote/trinocular-operators-in-lua.html
+        f.w = ((f.w == f_current.w / 2 ) and {f_current.w} or {f_current.w / 2})[1]
+
         outlineFocusedWindow(f)
         win:setFrame(f)
     else
@@ -860,7 +847,7 @@ function outlineFocusedWindow(desiredFrame)
                 else
                     f = win:frame()
                 end
-                print("前面的是", app:name(), f)
+                -- print("前面的是", app:name(), f)
                 WindowOutline = hs.drawing.rectangle(hs.geometry.rect(f.x, f.y, f.w, height))
                 WindowOutline:setFillColor({["hex"] = "#28a56b", ["alpha"] = 0.5})
                 WindowOutline:setStroke(false)
