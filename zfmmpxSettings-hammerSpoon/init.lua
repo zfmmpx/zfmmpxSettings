@@ -179,6 +179,8 @@ function layoutHalfOrFull()
     local win = hs.window.focusedWindow() -- 获取当前窗口
     if (win) then
         local f = win:frame() -- 获得当前窗口的 h w x y
+        local screen = win:screen() -- 获得当前窗口所在的屏幕
+        local f_current = screen:frame() -- 获得当前屏幕的 h w x y
 
         f.x = f_current.x
         f.y = f_current.y
