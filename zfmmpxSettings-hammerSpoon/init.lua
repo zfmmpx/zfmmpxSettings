@@ -189,6 +189,20 @@ function layoutHalfOrFull()
         -- lua的三元运算符参考：https://www.runoob.com/w3cnote/trinocular-operators-in-lua.html
         f.w = ((f.w == f_current.w / 2 ) and {f_current.w} or {f_current.w / 2})[1]
 
+        -- if (f.w == f_current.w / 2) then
+        --     print('f.w', f.w)
+        --     print(1111111111)
+        --     f.w = f_current.w
+        -- else
+        --     print('f_current.w', f_current.w)
+        --     print('f_current', f_current)
+        --     print('f.w2', f.w)
+        --     f.w = f_current.w / 2
+        --     print('f.w3', f.w)
+        --     print('f4', f)
+        --     print(22222222223)
+        -- end
+
         outlineFocusedWindow(f)
         win:setFrame(f)
     else
@@ -913,6 +927,7 @@ end)
 hs.hotkey.bind({"alt"}, "P", function()
     hs.applescript(
         [[ tell application "System Preferences"
+        reopen
         activate
         end tell ]]
     )
