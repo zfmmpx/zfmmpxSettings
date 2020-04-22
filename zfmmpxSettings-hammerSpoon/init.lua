@@ -174,8 +174,8 @@ function layoutU()
 end
 
 
--- 窗口大小占1/4屏幕
-function layoutHalfOrFull()
+-- 窗口大小占Full屏幕
+function layoutFull()
     local win = hs.window.focusedWindow() -- 获取当前窗口
     if (win) then
         local f = win:frame() -- 获得当前窗口的 h w x y
@@ -185,9 +185,10 @@ function layoutHalfOrFull()
         f.x = f_current.x
         f.y = f_current.y
         f.h = f_current.h
+        f.w = f_current.w
 
-        -- lua的三元运算符参考：https://www.runoob.com/w3cnote/trinocular-operators-in-lua.html
-        f.w = ((f.w == f_current.w / 2 ) and {f_current.w} or {f_current.w / 2})[1]
+        -- -- lua的三元运算符参考：https://www.runoob.com/w3cnote/trinocular-operators-in-lua.html
+        -- f.w = ((f.w == f_current.w / 2 ) and {f_current.w} or {f_current.w / 2})[1]
 
         -- if (f.w == f_current.w / 2) then
         --     print('f.w', f.w)
@@ -207,6 +208,76 @@ function layoutHalfOrFull()
         win:setFrame(f)
     else
         hs.alert.show("没有focused的window4")
+    end
+end
+
+function layoutHalf(position)
+    local win = hs.window.focusedWindow() -- 获取当前窗口
+    if (win) then
+        local f = win:frame() -- 获得当前窗口的 h w x y
+        local screen = win:screen() -- 获得当前窗口所在的屏幕
+        local f_current = screen:frame() -- 获得当前屏幕的 h w x y
+
+        f.y = f_current.y
+        f.h = f_current.h
+        f.w = f_current.w / 2
+
+        if (position == 'left') then
+            f.x = f_current.x
+        elseif (position == 'right') then
+            f.x = f_current.x + f_current.w / 2
+        end
+
+        outlineFocusedWindow(f)
+        win:setFrame(f)
+    else
+        hs.alert.show("没有focused的window4")
+    end
+end
+
+function layoutMiddle(position)
+    local win = hs.window.focusedWindow() -- 获取当前窗口
+    if (win) then
+        local f = win:frame() -- 获得当前窗口的 h w x y
+        local screen = win:screen() -- 获得当前窗口所在的屏幕
+        local f_current = screen:frame() -- 获得当前屏幕的 h w x y
+
+        f.x = f_current.x + f_current.w / 4
+        f.y = f_current.y + f_current.h / 8
+        f.h = f_current.h * 6 / 8
+        f.w = f_current.w / 2
+
+        outlineFocusedWindow(f)
+        win:setFrame(f)
+    else
+        hs.alert.show("没有focused的window4")
+    end
+end
+
+-- winf_noInv:setSortOrder(hs.window.filter.sortByCreated)
+winf_app = hs.window.filter.new(false)
+function switchWindow(action)
+    local win = hs.window.focusedWindow() -- 获取当前窗口
+    local app = win:application() -- 获取当前app
+    local appName = app:name() -- 获取当前appName
+    print('appName', appName)
+    if (win) then
+        local appWins = hs.window.filter.new(false):setAppFilter(appName,{visible=true}):getWindows(hs.window.filter.sortByCreated)
+        for key, val in pairs(appWins) do  -- Table iteration.
+            print(key, val)
+            if (val == win) then
+                if (action == 'prev') then
+                    print(111111, appWins[((key - 1 - 1) % #appWins) + 1])
+                    appWins[((key - 1 - 1) % #appWins) + 1]:focus()
+                elseif (action == 'next') then
+                    print(222222, appWins[((key + 1 - 1) % #appWins) + 1])
+                    appWins[((key + 1 - 1) % #appWins) + 1]:focus()
+                end
+            end
+        end
+
+        -- local aaa = hs.window.filter:getWindows(hs.window.filter:setSortOrder(hs.window.filter.sortByCreated))
+        -- print('aaa', aaa)
     end
 end
 
@@ -673,15 +744,25 @@ end
 -- ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 -- 特殊
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f16", layoutHalfOrFull) -- delete_or_backspace
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", function() tile("MX27AQ", 1, nil) tile("U2790B", 1, nil) tile("Color LCD", 1, nil) end) -- escape
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f16", function() layoutHalf('left') end) -- 左
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f19", function() layoutHalf('right') end) -- 右
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f17", layoutMiddle) -- 下
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f18", layoutFull) -- 上
+
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", function() tile("MX27AQ", 1, nil) tile("U2790B", 1, nil) tile("Color LCD", 1, nil) end) -- none
 
 
--- 切换窗口
-hs.hotkey.bind({}, "F16", switchWindowHorizontalLeft) -- 左
-hs.hotkey.bind({}, "F19", switchWindowHorizontalRight) -- 下
-hs.hotkey.bind({}, "F17", switchWindowVerticalDown) -- 上
-hs.hotkey.bind({}, "F18", switchWindowVerticalUp) -- 右
+-- -- 切换窗口
+-- hs.hotkey.bind({}, "F16", switchWindowHorizontalLeft) -- 左
+-- hs.hotkey.bind({}, "F19", switchWindowHorizontalRight) -- 右
+-- hs.hotkey.bind({}, "F17", switchWindowVerticalDown) -- 下
+-- hs.hotkey.bind({}, "F18", switchWindowVerticalUp) -- 上
+
+-- 切换窗口 or app
+hs.hotkey.bind({}, "F16", function() switchWindow('prev') end) -- 左
+hs.hotkey.bind({}, "F19", function() switchWindow('next') end) -- 右
+-- hs.hotkey.bind({}, "F17", hs.window.switcher.nextWindow) -- 下
+-- hs.hotkey.bind({}, "F18", hs.window.switcher.previousWindow) -- 上
 
 
 -- 移动窗口
@@ -951,7 +1032,8 @@ hs.hotkey.bind({"alt"}, "N", function() hs.application.open("/Applications/Netea
 hs.hotkey.bind({"alt"}, "S", function() hs.application.open("/Applications/Beyond Compare.app") end)
 hs.hotkey.bind({"alt"}, "V", function() hs.application.open("/Applications/Visual Studio Code.app") end)
 hs.hotkey.bind({"alt"}, "W", function() hs.application.open("/Applications/WeChat.app") end)
+hs.hotkey.bind({"alt"}, "Q", function() hs.application.open("/Applications/QQMusic.app") end)
 
 
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "R", function() hs.reload()  end)
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "R", function() hs.reload() end)
 hs.alert.show("Config loaded")
