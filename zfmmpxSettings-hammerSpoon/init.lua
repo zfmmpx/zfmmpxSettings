@@ -761,8 +761,8 @@ hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f18", layoutFull) -- 上
 -- 切换窗口 or app
 hs.hotkey.bind({}, "F16", function() switchWindow('prev') end) -- 左
 hs.hotkey.bind({}, "F19", function() switchWindow('next') end) -- 右
--- hs.hotkey.bind({}, "F17", hs.window.switcher.nextWindow) -- 下
--- hs.hotkey.bind({}, "F18", hs.window.switcher.previousWindow) -- 上
+hs.hotkey.bind({}, "F17", hs.window.switcher.nextWindow) -- 下
+hs.hotkey.bind({}, "F18", hs.window.switcher.previousWindow) -- 上
 
 
 -- 移动窗口
@@ -1035,5 +1035,14 @@ hs.hotkey.bind({"alt"}, "W", function() hs.application.open("/Applications/WeCha
 hs.hotkey.bind({"alt"}, "Q", function() hs.application.open("/Applications/QQMusic.app") end)
 
 
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "R", function() hs.reload() end)
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "R", function() hs.reload()  end)
 hs.alert.show("Config loaded")
+
+function test()
+    print(
+        12123333344441111,
+        hs.application.find()
+    )
+end
+-- test
+hs.hotkey.bind({"cmd"}, "T", test)
