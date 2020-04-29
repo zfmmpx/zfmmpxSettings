@@ -744,10 +744,10 @@ end
 -- ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 -- 特殊
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f16", function() layoutHalf('left') end) -- 左
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f19", function() layoutHalf('right') end) -- 右
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f17", layoutMiddle) -- 下
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "f18", layoutFull) -- 上
+hs.hotkey.bind({"cmd"}, "f16", function() layoutHalf('left') end) -- 左
+hs.hotkey.bind({"cmd"}, "f19", function() layoutHalf('right') end) -- 右
+hs.hotkey.bind({"cmd"}, "f17", layoutMiddle) -- 下
+hs.hotkey.bind({"cmd"}, "f18", layoutFull) -- 上
 
 -- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", function() tile("MX27AQ", 1, nil) tile("U2790B", 1, nil) tile("Color LCD", 1, nil) end) -- none
 
@@ -766,51 +766,51 @@ hs.hotkey.bind({}, "F18", hs.window.switcher.previousWindow) -- 上
 
 
 -- 移动窗口
-hs.hotkey.bind({"cmd"}, "F16", moveLeft, nil, moveLeft)
-hs.hotkey.bind({"cmd"}, "F17", moveDown, nil, moveDown)
-hs.hotkey.bind({"cmd"}, "F18", moveUp, nil, moveUp)
-hs.hotkey.bind({"cmd"}, "F19", moveRight, nil, moveRight)
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F16", moveLeft, nil, moveLeft)
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F17", moveDown, nil, moveDown)
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F18", moveUp, nil, moveUp)
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", moveRight, nil, moveRight)
 
 
--- 当前app放到MX27AQ,MX27AQ的窗口都放到Color LCD
-hs.hotkey.bind({"alt"}, "f16", function() collectAppToScreen("MX27AQ") end)
--- 当前app放到U2790B,U2790B的窗口都放到Color LCD
-hs.hotkey.bind({"alt"}, "f19", function() collectAppToScreen("U2790B") end)
--- 当前app放到Color LCD,Color LCD的窗口都放到华硕
-hs.hotkey.bind({"alt"}, "f17", function() collectAppToScreen("Color LCD") end)
+-- -- 当前app放到MX27AQ,MX27AQ的窗口都放到Color LCD
+-- hs.hotkey.bind({"alt"}, "f16", function() collectAppToScreen("MX27AQ") end)
+-- -- 当前app放到U2790B,U2790B的窗口都放到Color LCD
+-- hs.hotkey.bind({"alt"}, "f19", function() collectAppToScreen("U2790B") end)
+-- -- 当前app放到Color LCD,Color LCD的窗口都放到华硕
+-- hs.hotkey.bind({"alt"}, "f17", function() collectAppToScreen("Color LCD") end)
 
 
 
 
--- 窗口都最小
-hs.hotkey.bind({"ctrl"}, "F16", function() -- cmd+左
-    for _, wins in ipairs(winf_noInv:getWindows()) do
-        wins:minimize()
-    end
-end)
--- 当前app的所有窗口最小化
-hs.hotkey.bind({"ctrl"}, "F17", function() -- cmd+下
-    local win = hs.window.focusedWindow()
-    local app = win:application()
-    for _, window in ipairs(app:allWindows()) do
-        window:minimize()
-    end
-end)
--- 当前app的所有窗口都恢复
-hs.hotkey.bind({"ctrl"}, "F18", function() -- cmd+上
-    local win = hs.window.focusedWindow()
-    local app = win:application()
-    for _, window in ipairs(app:allWindows()) do
-        window:unminimize()
-    end
-end)
--- 窗口都恢复
-hs.hotkey.bind({"ctrl"}, "F19",  function() -- cmd 左
-    -- hammerspoon这个app比较特殊, 在default里面已经设置过, 现在将他设置为Hammerspoon = {},
-    for _, window in ipairs(hs.window.filter.new():setDefaultFilter({visible = false}):setAppFilter("Hammerspoon", {}):getWindows()) do
-    window:unminimize()
-    end
-end)
+-- -- 窗口都最小
+-- hs.hotkey.bind({"ctrl"}, "F16", function() -- cmd+左
+--     for _, wins in ipairs(winf_noInv:getWindows()) do
+--         wins:minimize()
+--     end
+-- end)
+-- -- 当前app的所有窗口最小化
+-- hs.hotkey.bind({"ctrl"}, "F17", function() -- cmd+下
+--     local win = hs.window.focusedWindow()
+--     local app = win:application()
+--     for _, window in ipairs(app:allWindows()) do
+--         window:minimize()
+--     end
+-- end)
+-- -- 当前app的所有窗口都恢复
+-- hs.hotkey.bind({"ctrl"}, "F18", function() -- cmd+上
+--     local win = hs.window.focusedWindow()
+--     local app = win:application()
+--     for _, window in ipairs(app:allWindows()) do
+--         window:unminimize()
+--     end
+-- end)
+-- -- 窗口都恢复
+-- hs.hotkey.bind({"ctrl"}, "F19",  function() -- cmd 左
+--     -- hammerspoon这个app比较特殊, 在default里面已经设置过, 现在将他设置为Hammerspoon = {},
+--     for _, window in ipairs(hs.window.filter.new():setDefaultFilter({visible = false}):setAppFilter("Hammerspoon", {}):getWindows()) do
+--     window:unminimize()
+--     end
+-- end)
 
 
 
@@ -1033,6 +1033,7 @@ hs.hotkey.bind({"alt"}, "S", function() hs.application.open("/Applications/Beyon
 hs.hotkey.bind({"alt"}, "V", function() hs.application.open("/Applications/Visual Studio Code.app") end)
 hs.hotkey.bind({"alt"}, "W", function() hs.application.open("/Applications/WeChat.app") end)
 hs.hotkey.bind({"alt"}, "Q", function() hs.application.open("/Applications/QQMusic.app") end)
+hs.hotkey.bind({"alt"}, "Y", function() hs.application.open("/Users/user/Applications/Chrome Apps.localized/YouTube Music.app") end)
 
 
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "R", function() hs.reload()  end)
@@ -1045,4 +1046,4 @@ function test()
     )
 end
 -- test
-hs.hotkey.bind({"cmd"}, "T", test)
+-- hs.hotkey.bind({"cmd"}, "T", test)
