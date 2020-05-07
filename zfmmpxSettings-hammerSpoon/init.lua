@@ -699,6 +699,50 @@ function collectAppToScreen(screenName)
     end
 end
 
+-- codeUp
+function codeUp()
+    try
+    {
+        -- try 代码块
+        function ()
+            local app_code = hs.application.find("Code")
+            local window_code = app_code:focusedWindow()
+            local screen_code = window_code:screen()
+            local screen_4k = hs.screen.find("U2790B")
+
+
+            local app_chrome = hs.application.find("Google Chrome")
+            local window_chrome = app_chrome:focusedWindow()
+            local screen_apple = hs.screen.find('Color LCD')
+
+            window_chrome:focus()
+            window_code:focus()
+            -- codeUp
+            if (screen_code:name() == 'Color LCD') then
+                window_code:moveToScreen(screen_4k)
+                window_code:maximize()
+
+                window_chrome:moveToScreen(screen_apple)
+                window_chrome:maximize()
+            else
+                window_code:moveToScreen(screen_apple)
+                window_code:maximize()
+
+                window_chrome:moveToScreen(screen_4k)
+                window_chrome:maximize()
+            end
+        end,
+        -- catch 代码块
+        catch
+        {
+            -- 发生异常后，被执行
+            function (errors)
+                print('11111111e: ', errors)
+            end
+        }
+    }
+end
+
 -- 向右循环选择窗口
 function switchWindowHorizontalRight()
     hs.window.filter.focusEast()
@@ -757,6 +801,9 @@ hs.hotkey.bind({"cmd"}, "f18", layoutFull) -- 上
 -- hs.hotkey.bind({}, "F19", switchWindowHorizontalRight) -- 右
 -- hs.hotkey.bind({}, "F17", switchWindowVerticalDown) -- 下
 -- hs.hotkey.bind({}, "F18", switchWindowVerticalUp) -- 上
+
+-- 找到chrome
+hs.hotkey.bind({"ctrl", "alt", "cmd", "shift"}, "U", codeUp)
 
 -- 切换窗口 or app
 hs.hotkey.bind({}, "F16", function() switchWindow('prev') end) -- 左
@@ -915,55 +962,54 @@ end
 
 
 function outlineFocusedWindow(desiredFrame)
+    -- try
+    -- {
+    --     -- try 代码块
+    --     function ()
+    --         -- Delete an existing highlight if it exists
+    --         if WindowOutline then
+    --             if WindowOutline.delete then
+    --                 WindowOutline:delete()
+    --             end
+    --             if WindowOutlineTimer then
+    --                 WindowOutlineTimer:stop()
+    --             end
+    --         end
 
-    try
-    {
-        -- try 代码块
-        function ()
-            -- Delete an existing highlight if it exists
-            if WindowOutline then
-                if WindowOutline.delete then
-                    WindowOutline:delete()
-                end
-                if WindowOutlineTimer then
-                    WindowOutlineTimer:stop()
-                end
-            end
+    --         local f
+    --         local win = hs.window.focusedWindow()
+    --         if (win) then
+    --             local app = win:application()
+    --             local height = switchAppSettings[app:name()]
+    --             if (not height) then
+    --                 height = 22
+    --             end
 
-            local f
-            local win = hs.window.focusedWindow()
-            if (win) then
-                local app = win:application()
-                local height = switchAppSettings[app:name()]
-                if (not height) then
-                    height = 22
-                end
+    --             if (desiredFrame) then
+    --                 f = desiredFrame
+    --             else
+    --                 f = win:frame()
+    --             end
+    --             -- print("前面的是", app:name(), f)
+    --             WindowOutline = hs.drawing.rectangle(hs.geometry.rect(f.x, f.y, f.w, height))
+    --             WindowOutline:setFillColor({["hex"] = "#28a56b", ["alpha"] = 0.5})
+    --             WindowOutline:setStroke(false)
+    --             WindowOutline:setFill(true)
+    --             WindowOutline:show()
+    --         else
+    --             -- hs.alert.show("没有focused的window14")
+    --         end
+    --     end,
 
-                if (desiredFrame) then
-                    f = desiredFrame
-                else
-                    f = win:frame()
-                end
-                -- print("前面的是", app:name(), f)
-                WindowOutline = hs.drawing.rectangle(hs.geometry.rect(f.x, f.y, f.w, height))
-                WindowOutline:setFillColor({["hex"] = "#28a56b", ["alpha"] = 0.5})
-                WindowOutline:setStroke(false)
-                WindowOutline:setFill(true)
-                WindowOutline:show()
-            else
-                -- hs.alert.show("没有focused的window14")
-            end
-        end,
-
-        -- catch 代码块
-        catch
-        {
-            -- 发生异常后，被执行
-            function (errors)
-                print('11111111e: ', errors)
-            end
-        }
-    }
+    --     -- catch 代码块
+    --     catch
+    --     {
+    --         -- 发生异常后，被执行
+    --         function (errors)
+    --             print('11111111e: ', errors)
+    --         end
+    --     }
+    -- }
 end
 
 
@@ -1022,14 +1068,14 @@ hs.hotkey.bind({"alt"}, "R", function()
         ]]
     )
 end)
-hs.hotkey.bind({"alt"}, "H", function() hs.application.open("/Applications/HammerSpoon.app") end)
-hs.hotkey.bind({"alt"}, "J", function() hs.application.open("/Users/Jimmy/eclipse/jee-oxygen/Eclipse.app") end)
-hs.hotkey.bind({"alt"}, "L", function() hs.application.open("/Applications/Karabiner-Elements.app") end)
-hs.hotkey.bind({"alt"}, "M", function() hs.application.open("/Applications/虾米音乐.app") end)
+-- hs.hotkey.bind({"alt"}, "H", function() hs.application.open("/Applications/HammerSpoon.app") end)
+-- hs.hotkey.bind({"alt"}, "J", function() hs.application.open("/Users/Jimmy/eclipse/jee-oxygen/Eclipse.app") end)
+-- hs.hotkey.bind({"alt"}, "K", function() hs.application.open("/Applications/Karabiner-Elements.app") end)
+-- hs.hotkey.bind({"alt"}, "M", function() hs.application.open("/Applications/虾米音乐.app") end)
 hs.hotkey.bind({"alt"}, "N", function() hs.application.open("/Applications/NeteaseMusic.app") end)
 -- hs.hotkey.bind({"alt"}, "P", function() hs.application.open("/System/Libary/System Preferences.app") end)
 -- hs.hotkey.bind({"alt"}, "R", function() hs.application.open("/Applications/终端.app") end)
-hs.hotkey.bind({"alt"}, "S", function() hs.application.open("/Applications/Beyond Compare.app") end)
+-- hs.hotkey.bind({"alt"}, "S", function() hs.application.open("/Applications/Beyond Compare.app") end)
 hs.hotkey.bind({"alt"}, "V", function() hs.application.open("/Applications/Visual Studio Code.app") end)
 hs.hotkey.bind({"alt"}, "W", function() hs.application.open("/Applications/WeChat.app") end)
 hs.hotkey.bind({"alt"}, "Q", function() hs.application.open("/Applications/QQMusic.app") end)

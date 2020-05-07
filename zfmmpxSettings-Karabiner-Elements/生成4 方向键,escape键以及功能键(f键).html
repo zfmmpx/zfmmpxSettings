@@ -7,8 +7,31 @@
 
     // 新的
     ['delete_or_backspace', 'spacebar', ['left_control']],
-    ['caps_lock', 'escape'],
+    // ['caps_lock', 'escape'],
   ]
+
+
+  // 特殊规则
+  var caps_lockKey = {
+    type: 'basic',
+    from: {
+      key_code: 'caps_lock',
+      modifiers: {
+        optional: ['any'],
+      },
+    },
+    to: [
+      {
+        key_code: 'left_control',
+        modifiers: ['left_option', 'left_command', 'left_shift']
+      },
+    ],
+    to_if_alone: [
+      {
+        key_code: 'escape',
+      },
+    ],
+  }
 
   function generate() {
     var result = [],
@@ -17,6 +40,7 @@
       singleRule = generate_single_rule(data[i][0], data[i][1], data[i][2])
       result.push(singleRule)
     }
+    result.push(caps_lockKey)
     return result
   }
 
