@@ -818,8 +818,8 @@ hs.hotkey.bind({"ctrl", "shift"}, "Z", hs.window.switcher.previousWindow) -- 上
 
 -- 移动窗口
 hs.hotkey.bind({"ctrl", "shift"}, "A", moveLeft, nil, moveLeft)
-hs.hotkey.bind({"ctrl", "shift"}, "S", moveDown, nil, moveDown)
-hs.hotkey.bind({"ctrl", "shift"}, "D", moveUp, nil, moveUp)
+hs.hotkey.bind({"ctrl", "shift"}, "D", moveDown, nil, moveDown)
+hs.hotkey.bind({"ctrl", "shift"}, "S", moveUp, nil, moveUp)
 hs.hotkey.bind({"ctrl", "shift"}, "F", moveRight, nil, moveRight)
 
 -- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F16", moveLeft, nil, moveLeft)
