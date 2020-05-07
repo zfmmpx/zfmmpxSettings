@@ -793,6 +793,23 @@ hs.hotkey.bind({"ctrl", "shift"}, "O", function() layoutHalf('right') end) -- �
 hs.hotkey.bind({"ctrl", "shift"}, "U", layoutMiddle) -- 下
 hs.hotkey.bind({"ctrl", "shift"}, "I", layoutFull) -- 上
 
+-- 移动窗口
+-- hs.hotkey.bind({"ctrl", "shift"}, "A", moveLeft, nil, moveLeft)
+-- hs.hotkey.bind({"ctrl", "shift"}, "D", moveDown, nil, moveDown)
+-- hs.hotkey.bind({"ctrl", "shift"}, "S", moveUp, nil, moveUp)
+-- hs.hotkey.bind({"ctrl", "shift"}, "F", moveRight, nil, moveRight)
+
+-- codeUp
+hs.hotkey.bind({"ctrl", "shift"}, "T", codeUp)
+
+
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F16", moveLeft, nil, moveLeft)
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F17", moveDown, nil, moveDown)
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F18", moveUp, nil, moveUp)
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", moveRight, nil, moveRight)
+
+
+
 -- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", function() tile("MX27AQ", 1, nil) tile("U2790B", 1, nil) tile("Color LCD", 1, nil) end) -- none
 
 
@@ -802,30 +819,19 @@ hs.hotkey.bind({"ctrl", "shift"}, "I", layoutFull) -- 上
 -- hs.hotkey.bind({}, "F17", switchWindowVerticalDown) -- 下
 -- hs.hotkey.bind({}, "F18", switchWindowVerticalUp) -- 上
 
--- 找到chrome
-hs.hotkey.bind({"ctrl", "shift"}, "V", codeUp)
 
 -- 切换窗口 or app
-hs.hotkey.bind({"ctrl", "shift"}, "Q", function() switchWindow('prev') end) -- 左
-hs.hotkey.bind({"ctrl", "shift"}, "W", function() switchWindow('next') end) -- 右
-hs.hotkey.bind({"ctrl", "shift"}, "X", hs.window.switcher.nextWindow) -- 下
-hs.hotkey.bind({"ctrl", "shift"}, "Z", hs.window.switcher.previousWindow) -- 上
+-- hs.hotkey.bind({"ctrl", "shift"}, "Q", function() switchWindow('prev') end) -- 左
+-- hs.hotkey.bind({"ctrl", "shift"}, "W", function() switchWindow('next') end) -- 右
+-- hs.hotkey.bind({"ctrl", "shift"}, "X", hs.window.switcher.nextWindow) -- 下
+-- hs.hotkey.bind({"ctrl", "shift"}, "Z", hs.window.switcher.previousWindow) -- 上
+
 -- hs.hotkey.bind({}, "F16", function() switchWindow('prev') end) -- 左
 -- hs.hotkey.bind({}, "F19", function() switchWindow('next') end) -- 右
 -- hs.hotkey.bind({}, "F17", hs.window.switcher.nextWindow) -- 下
 -- hs.hotkey.bind({}, "F18", hs.window.switcher.previousWindow) -- 上
 
 
--- 移动窗口
-hs.hotkey.bind({"ctrl", "shift"}, "A", moveLeft, nil, moveLeft)
-hs.hotkey.bind({"ctrl", "shift"}, "D", moveDown, nil, moveDown)
-hs.hotkey.bind({"ctrl", "shift"}, "S", moveUp, nil, moveUp)
-hs.hotkey.bind({"ctrl", "shift"}, "F", moveRight, nil, moveRight)
-
--- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F16", moveLeft, nil, moveLeft)
--- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F17", moveDown, nil, moveDown)
--- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F18", moveUp, nil, moveUp)
--- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", moveRight, nil, moveRight)
 
 
 -- -- 当前app放到MX27AQ,MX27AQ的窗口都放到Color LCD
@@ -1047,9 +1053,11 @@ end, true)
 -- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 
 
-hs.hotkey.bind({"alt"}, "C", function() hs.application.open("/Applications/Google Chrome.app") end)
-hs.hotkey.bind({"alt"}, "E", function() hs.application.open("/Applications/Eudic.app") end)
-hs.hotkey.bind({"alt"}, "F", function()
+hs.hotkey.bind({"ctrl", "shift"}, "N", function() hs.application.open("/Applications/Visual Studio Code.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "M", function() hs.application.open("/Applications/Google Chrome.app") end)
+-- hs.hotkey.bind({"ctrl", "shift"}, "E", function() hs.application.open("/Applications/Eudic.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "C", function() hs.application.open("/Applications/WeChat.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "V", function()
     hs.applescript(
         [[ tell application "Finder"
         reopen
@@ -1060,7 +1068,7 @@ hs.hotkey.bind({"alt"}, "F", function()
         end tell ]]
     )
 end)
-hs.hotkey.bind({"alt"}, "P", function()
+hs.hotkey.bind({"ctrl", "shift"}, "P", function()
     hs.applescript(
         [[ tell application "System Preferences"
         reopen
@@ -1068,7 +1076,7 @@ hs.hotkey.bind({"alt"}, "P", function()
         end tell ]]
     )
 end)
-hs.hotkey.bind({"alt"}, "R", function()
+hs.hotkey.bind({"ctrl", "shift"}, "R", function()
     hs.applescript(
         [[ tell application "iTerm"
             reopen
@@ -1077,22 +1085,15 @@ hs.hotkey.bind({"alt"}, "R", function()
         ]]
     )
 end)
--- hs.hotkey.bind({"alt"}, "H", function() hs.application.open("/Applications/HammerSpoon.app") end)
--- hs.hotkey.bind({"alt"}, "J", function() hs.application.open("/Users/Jimmy/eclipse/jee-oxygen/Eclipse.app") end)
--- hs.hotkey.bind({"alt"}, "K", function() hs.application.open("/Applications/Karabiner-Elements.app") end)
--- hs.hotkey.bind({"alt"}, "M", function() hs.application.open("/Applications/虾米音乐.app") end)
-hs.hotkey.bind({"alt"}, "N", function() hs.application.open("/Applications/NeteaseMusic.app") end)
--- hs.hotkey.bind({"alt"}, "P", function() hs.application.open("/System/Libary/System Preferences.app") end)
--- hs.hotkey.bind({"alt"}, "R", function() hs.application.open("/Applications/终端.app") end)
--- hs.hotkey.bind({"alt"}, "S", function() hs.application.open("/Applications/Beyond Compare.app") end)
-hs.hotkey.bind({"alt"}, "V", function() hs.application.open("/Applications/Visual Studio Code.app") end)
-hs.hotkey.bind({"alt"}, "W", function() hs.application.open("/Applications/WeChat.app") end)
-hs.hotkey.bind({"alt"}, "Q", function() hs.application.open("/Applications/QQMusic.app") end)
-hs.hotkey.bind({"alt"}, "Y", function() hs.application.open("/Users/user/Applications/Chrome Apps.localized/YouTube Music.app") end)
+
+hs.hotkey.bind({"ctrl", "shift"}, "Q", function() hs.application.open("/Applications/QQMusic.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "W", function() hs.application.open("/Applications/NeteaseMusic.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "E", function() hs.application.open("/Users/user/Applications/Chrome Apps.localized/YouTube Music.app") end)
 
 
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "R", function() hs.reload()  end)
 hs.alert.show("Config loaded")
+
 
 function test()
     print(
@@ -1100,5 +1101,14 @@ function test()
         hs.application.find()
     )
 end
+
+
+-- hs.hotkey.bind({"ctrl", "shift"}, "H", function() hs.application.open("/Applications/HammerSpoon.app") end)
+-- hs.hotkey.bind({"ctrl", "shift"}, "J", function() hs.application.open("/Users/Jimmy/eclipse/jee-oxygen/Eclipse.app") end)
+-- hs.hotkey.bind({"ctrl", "shift"}, "K", function() hs.application.open("/Applications/Karabiner-Elements.app") end)
+-- hs.hotkey.bind({"ctrl", "shift"}, "M", function() hs.application.open("/Applications/虾米音乐.app") end)
+-- hs.hotkey.bind({"ctrl", "shift"}, "P", function() hs.application.open("/System/Libary/System Preferences.app") end)
+-- hs.hotkey.bind({"ctrl", "shift"}, "R", function() hs.application.open("/Applications/终端.app") end)
+-- hs.hotkey.bind({"ctrl", "shift"}, "S", function() hs.application.open("/Applications/Beyond Compare.app") end)
 -- test
 -- hs.hotkey.bind({"cmd"}, "T", test)
