@@ -788,10 +788,10 @@ end
 -- ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 -- 特殊
-hs.hotkey.bind({"cmd"}, "f16", function() layoutHalf('left') end) -- 左
-hs.hotkey.bind({"cmd"}, "f19", function() layoutHalf('right') end) -- 右
-hs.hotkey.bind({"cmd"}, "f17", layoutMiddle) -- 下
-hs.hotkey.bind({"cmd"}, "f18", layoutFull) -- 上
+hs.hotkey.bind({"ctrl", "shift"}, "Y", function() layoutHalf('left') end) -- 左
+hs.hotkey.bind({"ctrl", "shift"}, "O", function() layoutHalf('right') end) -- 右
+hs.hotkey.bind({"ctrl", "shift"}, "U", layoutMiddle) -- 下
+hs.hotkey.bind({"ctrl", "shift"}, "I", layoutFull) -- 上
 
 -- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", function() tile("MX27AQ", 1, nil) tile("U2790B", 1, nil) tile("Color LCD", 1, nil) end) -- none
 
@@ -803,20 +803,29 @@ hs.hotkey.bind({"cmd"}, "f18", layoutFull) -- 上
 -- hs.hotkey.bind({}, "F18", switchWindowVerticalUp) -- 上
 
 -- 找到chrome
-hs.hotkey.bind({"ctrl", "alt", "cmd", "shift"}, "U", codeUp)
+hs.hotkey.bind({"ctrl", "shift"}, "V", codeUp)
 
 -- 切换窗口 or app
-hs.hotkey.bind({}, "F16", function() switchWindow('prev') end) -- 左
-hs.hotkey.bind({}, "F19", function() switchWindow('next') end) -- 右
-hs.hotkey.bind({}, "F17", hs.window.switcher.nextWindow) -- 下
-hs.hotkey.bind({}, "F18", hs.window.switcher.previousWindow) -- 上
+hs.hotkey.bind({"ctrl", "shift"}, "N", function() switchWindow('prev') end) -- 左
+hs.hotkey.bind({"ctrl", "shift"}, "M", function() switchWindow('next') end) -- 右
+hs.hotkey.bind({"ctrl", "shift"}, "X", hs.window.switcher.nextWindow) -- 下
+hs.hotkey.bind({"ctrl", "shift"}, "Z", hs.window.switcher.previousWindow) -- 上
+-- hs.hotkey.bind({}, "F16", function() switchWindow('prev') end) -- 左
+-- hs.hotkey.bind({}, "F19", function() switchWindow('next') end) -- 右
+-- hs.hotkey.bind({}, "F17", hs.window.switcher.nextWindow) -- 下
+-- hs.hotkey.bind({}, "F18", hs.window.switcher.previousWindow) -- 上
 
 
 -- 移动窗口
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F16", moveLeft, nil, moveLeft)
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F17", moveDown, nil, moveDown)
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F18", moveUp, nil, moveUp)
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", moveRight, nil, moveRight)
+hs.hotkey.bind({"ctrl", "shift"}, "A", moveLeft, nil, moveLeft)
+hs.hotkey.bind({"ctrl", "shift"}, "S", moveDown, nil, moveDown)
+hs.hotkey.bind({"ctrl", "shift"}, "D", moveUp, nil, moveUp)
+hs.hotkey.bind({"ctrl", "shift"}, "F", moveRight, nil, moveRight)
+
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F16", moveLeft, nil, moveLeft)
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F17", moveDown, nil, moveDown)
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F18", moveUp, nil, moveUp)
+-- hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F19", moveRight, nil, moveRight)
 
 
 -- -- 当前app放到MX27AQ,MX27AQ的窗口都放到Color LCD
