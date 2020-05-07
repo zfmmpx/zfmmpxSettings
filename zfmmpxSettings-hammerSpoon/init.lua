@@ -806,8 +806,8 @@ hs.hotkey.bind({"ctrl", "shift"}, "I", layoutFull) -- 上
 hs.hotkey.bind({"ctrl", "shift"}, "V", codeUp)
 
 -- 切换窗口 or app
-hs.hotkey.bind({"ctrl", "shift"}, "N", function() switchWindow('prev') end) -- 左
-hs.hotkey.bind({"ctrl", "shift"}, "M", function() switchWindow('next') end) -- 右
+hs.hotkey.bind({"ctrl", "shift"}, "Q", function() switchWindow('prev') end) -- 左
+hs.hotkey.bind({"ctrl", "shift"}, "W", function() switchWindow('next') end) -- 右
 hs.hotkey.bind({"ctrl", "shift"}, "X", hs.window.switcher.nextWindow) -- 下
 hs.hotkey.bind({"ctrl", "shift"}, "Z", hs.window.switcher.previousWindow) -- 上
 -- hs.hotkey.bind({}, "F16", function() switchWindow('prev') end) -- 左
