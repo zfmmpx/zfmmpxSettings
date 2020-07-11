@@ -1,0 +1,36 @@
+{
+  // 整体放缩
+  "window.zoomLevel": 0,
+  // 取消拖拽文字
+  "editor.dragAndDrop": false,
+  // 控制编辑器是否应呈现控制字符
+  "editor.renderControlCharacters": true,
+  // vscode icons
+  "workbench.iconTheme": "vscode-icons",
+  // 终端fontFamily
+  "terminal.integrated.fontFamily": "'MesloLGS NF'",
+
+  // --------------------------------eslint & prettier--------------------------------
+  // eslint
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+
+  // 设置Format Document With为prettier，并且下载vs code的prettier插件，把下面这一项设置为true，就可以用prettier去格式化
+  "editor.formatOnSave": true,
+  // 设置Format Document With为prettier，
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // prettier configuration
+  "prettier.trailingComma": "all",
+  "prettier.printWidth": 100, // 多少个字符换行
+  "prettier.semi": false,
+  "prettier.jsxSingleQuote": true, // 在jsx中用单引号而不是双引号
+  "prettier.jsxBracketSameLine": false, // jsx开始标签的>强制换行
+  "prettier.arrowParens": "always", // 箭头函数总是参数总是包含在()内
+  "prettier.endOfLine": "lf"
+  /* 下面这条规则的目的是：点击保存时，根据 eslint 规则自定修复，同时集成 prettier 到 eslint 中。
+    这条规则官网上没有,可能已经[_DEPRECTAED_]，see https://github.com/prettier/prettier-vscode/issues/999，
+    所以决定不用 */
+  // eslintIntegration: true,
+}

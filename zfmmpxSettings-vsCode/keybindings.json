@@ -1,0 +1,61 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+  // console wrap prefix
+  {
+    "key": "cmd+l",
+    "command": "console.log.wrap.prefix",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+alt+w ctrl+alt+w",
+    "command": "-console.log.wrap.prefix",
+    "when": "editorTextFocus"
+  },
+
+  // close InGroup
+  {
+    "key": "ctrl+shift+0",
+    "command": "workbench.action.closeEditorsToTheRight"
+  },
+  {
+    "key": "ctrl+shift+9",
+    "command": "workbench.action.closeEditorsToTheLeft"
+  },
+
+  //   // 解开下面这段可以变成switch InGroup，原本的switch betweenGroup会失效
+  //   // switch InGroup
+  //   {
+  //     "key": "alt+cmd+right",
+  //     "command": "workbench.action.nextEditorInGroup"
+  //   },
+  //   {
+  //     "key": "cmd+k alt+cmd+right",
+  //     "command": "-workbench.action.nextEditorInGroup"
+  //   },
+  //   {
+  //     "key": "alt+cmd+left",
+  //     "command": "workbench.action.previousEditorInGroup"
+  //   },
+  //   {
+  //     "key": "cmd+k alt+cmd+left",
+  //     "command": "-workbench.action.previousEditorInGroup"
+  //   },
+
+  // move InGroup
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "cmd+k shift+cmd+left",
+    "command": "-workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "workbench.action.moveEditorRightInGroup"
+  },
+  {
+    "key": "cmd+k shift+cmd+right",
+    "command": "-workbench.action.moveEditorRightInGroup"
+  }
+]

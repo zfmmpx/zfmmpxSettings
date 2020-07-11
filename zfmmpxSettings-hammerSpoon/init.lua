@@ -1053,11 +1053,11 @@ end, true)
 -- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 
 
-hs.hotkey.bind({"ctrl", "shift"}, "N", function() hs.application.open("/Applications/Visual Studio Code.app") end)
-hs.hotkey.bind({"ctrl", "shift"}, "M", function() hs.application.open("/Applications/Google Chrome.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "V", function() hs.application.open("/Applications/Visual Studio Code.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "C", function() hs.application.open("/Applications/Google Chrome.app") end)
 -- hs.hotkey.bind({"ctrl", "shift"}, "E", function() hs.application.open("/Applications/Eudic.app") end)
-hs.hotkey.bind({"ctrl", "shift"}, "C", function() hs.application.open("/Applications/WeChat.app") end)
-hs.hotkey.bind({"ctrl", "shift"}, "V", function()
+hs.hotkey.bind({"ctrl", "shift"}, "M", function() hs.application.open("/Applications/WeChat.app") end)
+hs.hotkey.bind({"ctrl", "shift"}, "N", function()
     hs.applescript(
         [[ tell application "Finder"
         reopen
@@ -1089,6 +1089,9 @@ end)
 hs.hotkey.bind({"ctrl", "shift"}, "Q", function() hs.application.open("/Applications/QQMusic.app") end)
 hs.hotkey.bind({"ctrl", "shift"}, "W", function() hs.application.open("/Applications/NeteaseMusic.app") end)
 hs.hotkey.bind({"ctrl", "shift"}, "E", function() hs.application.open("/Users/user/Applications/Chrome Apps.localized/YouTube Music.app") end)
+
+hs.hotkey.bind({"ctrl", "shift"}, "H", function() hs.eventtap.keyStroke({"cmd", "alt"}, "left") end)
+hs.hotkey.bind({"ctrl", "shift"}, "L", function() hs.eventtap.keyStroke({"cmd", "alt"}, "right") end)
 
 
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "R", function() hs.reload()  end)
