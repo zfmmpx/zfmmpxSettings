@@ -263,8 +263,20 @@ function generate() {
 
 // 一般规则的生成方程
 function generate_d_mo_single_rule(from_key_code, to_key_code, to_modifier_key_code_array) {
-  let toArr = [],
-    conditionsArr = []
+  let toArr = []
+  const conditionsArr = [
+    {
+      type: 'variable_if',
+      name: 'd_mo',
+      value: 1,
+    },
+    {
+      type: 'variable_if',
+      name: 'v_mo',
+      value: 0,
+    },
+  ]
+
   if (to_modifier_key_code_array) {
     toArr = [
       {
@@ -274,29 +286,6 @@ function generate_d_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
     ]
   } else {
     toArr = [{ key_code: to_key_code }]
-  }
-
-  if (from_key_code == 'm' || from_key_code == 'n') {
-    conditionsArr = [
-      {
-        type: 'variable_if',
-        name: 'd_mo',
-        value: 1,
-      },
-    ]
-  } else {
-    conditionsArr = [
-      {
-        type: 'variable_if',
-        name: 'd_mo',
-        value: 1,
-      },
-      {
-        type: 'variable_if',
-        name: 'v_mo',
-        value: 0,
-      },
-    ]
   }
 
   const result = {
