@@ -35,20 +35,10 @@ const d_mo_data = [
 ]
 
 const v_mo_data = [
-  ['h', 'left_arrow', ['left_shift', 'left_option']],
-  ['j', 'down_arrow', ['left_shift']],
-  ['k', 'up_arrow', ['left_shift']],
-  ['l', 'right_arrow', ['left_shift', 'left_option']],
-  // ['left_command', 'left_command'],
-  // ['right_command', 'left_command'],
-]
-const v_mo_data2 = [
   ['h', 'left_arrow', ['left_shift']],
   ['j', 'down_arrow', ['left_shift']],
   ['k', 'up_arrow', ['left_shift']],
   ['l', 'right_arrow', ['left_shift']],
-  // ['left_command', 'left_command'],
-  // ['right_command', 'left_command'],
 ]
 
 const disable_settings_data = [
@@ -84,6 +74,7 @@ const normal_characters_data_d = [
   'r',
   't',
   'u',
+  'v',
   'w',
   'x',
   'y',
@@ -94,6 +85,7 @@ const normal_characters_data_v = [
   'a',
   'b',
   'c',
+  'd',
   'e',
   'f',
   'g',
@@ -142,9 +134,16 @@ const dKey = {
       },
     },
   ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'v_mo',
+      value: 0,
+    },
+  ],
 }
 
-const sKey = {
+const sKey1 = {
   type: 'basic',
   from: {
     key_code: 's',
@@ -167,6 +166,33 @@ const sKey = {
       type: 'variable_if',
       name: 'v_mo',
       value: 0,
+    },
+  ],
+}
+
+const sKey2 = {
+  type: 'basic',
+  from: {
+    key_code: 's',
+    modifiers: {
+      optional: ['any'],
+    },
+  },
+  to: [
+    {
+      key_code: 'left_option',
+    },
+  ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'd_mo',
+      value: 0,
+    },
+    {
+      type: 'variable_if',
+      name: 'v_mo',
+      value: 1,
     },
   ],
 }
@@ -200,7 +226,71 @@ const vKey = {
       },
     },
   ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'd_mo',
+      value: 0,
+    },
+  ],
 }
+
+const vJ = {
+  type: 'basic',
+  from: {
+    key_code: 'j',
+    modifiers: {
+      mandatory: ['option'],
+    },
+  },
+  to: [
+    {
+      key_code: 'down_arrow',
+      modifiers: ['left_shift'],
+    },
+  ],
+  to_after_key_up: [
+    {
+      key_code: 'vk_none',
+    },
+  ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'v_mo',
+      value: 1,
+    },
+  ],
+}
+
+const vK = {
+  type: 'basic',
+  from: {
+    key_code: 'k',
+    modifiers: {
+      mandatory: ['option'],
+    },
+  },
+  to: [
+    {
+      key_code: 'up_arrow',
+      modifiers: ['left_shift'],
+    },
+  ],
+  to_after_key_up: [
+    {
+      key_code: 'vk_none',
+    },
+  ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'v_mo',
+      value: 1,
+    },
+  ],
+}
+
 
 const d_vDisableOtherKey = {
   type: 'basic',
@@ -230,7 +320,6 @@ const d_vDisableOtherKey = {
 const whole_data = [
   d_mo_data,
   v_mo_data,
-  v_mo_data2,
   disable_settings_data,
   normal_characters_data_d,
   normal_characters_data_v,
@@ -240,7 +329,6 @@ const whole_data = [
 const funcArr = [
   generate_d_mo_single_rule,
   generate_v_mo_single_rule,
-  generate_v_mo_single_rule2,
   generate_disable_settings_single_rule,
   generate_normal_characters_single_rule('d', 'd_mo'),
   generate_normal_characters_single_rule('v', 'v_mo'),
@@ -262,7 +350,7 @@ function generate() {
 
       return result
     },
-    [dKey, sKey, vKey],
+    [dKey, sKey1, sKey2, vKey, vJ, vK],
   )
 }
 
@@ -335,43 +423,6 @@ function generate_v_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
       {
         type: 'variable_if',
         name: 'v_mo',
-        value: 1,
-      },
-    ],
-  }
-
-  return result
-}
-
-function generate_v_mo_single_rule2(from_key_code, to_key_code, to_modifier_key_code_array) {
-  const result = {
-    type: 'basic',
-    from: {
-      key_code: from_key_code,
-      modifiers: {
-        optional: ['any'],
-      },
-    },
-    to: [
-      {
-        key_code: to_key_code,
-        modifiers: to_modifier_key_code_array,
-      },
-    ],
-    to_after_key_up: [
-      {
-        key_code: 'vk_none',
-      },
-    ],
-    conditions: [
-      {
-        type: 'variable_if',
-        name: 'v_mo',
-        value: 1,
-      },
-      {
-        type: 'variable_if',
-        name: 'd_mo',
         value: 1,
       },
     ],
