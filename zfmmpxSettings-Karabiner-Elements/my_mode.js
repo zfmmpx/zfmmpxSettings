@@ -163,6 +163,11 @@ const sKey = {
       name: 'd_mo',
       value: 1,
     },
+    {
+      type: 'variable_if',
+      name: 'v_mo',
+      value: 0,
+    },
   ],
 }
 
@@ -264,19 +269,6 @@ function generate() {
 // 一般规则的生成方程
 function generate_d_mo_single_rule(from_key_code, to_key_code, to_modifier_key_code_array) {
   let toArr = []
-  const conditionsArr = [
-    {
-      type: 'variable_if',
-      name: 'd_mo',
-      value: 1,
-    },
-    {
-      type: 'variable_if',
-      name: 'v_mo',
-      value: 0,
-    },
-  ]
-
   if (to_modifier_key_code_array) {
     toArr = [
       {
@@ -297,7 +289,18 @@ function generate_d_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
       },
     },
     to: toArr,
-    conditions: conditionsArr,
+    conditions: [
+      {
+        type: 'variable_if',
+        name: 'd_mo',
+        value: 1,
+      },
+      {
+        type: 'variable_if',
+        name: 'v_mo',
+        value: 0,
+      },
+    ],
   }
 
   return result
@@ -326,13 +329,13 @@ function generate_v_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
     conditions: [
       {
         type: 'variable_if',
-        name: 'v_mo',
-        value: 1,
+        name: 'd_mo',
+        value: 0,
       },
       {
         type: 'variable_if',
-        name: 'd_mo',
-        value: 0,
+        name: 'v_mo',
+        value: 1,
       },
     ],
   }
@@ -406,39 +409,33 @@ function generate_disable_settings_single_rule(from_key_code, from_modifier_key_
 }
 
 function generate_normal_characters_single_rule(first_key, mode_name) {
-  console.log('first_key:', first_key)
-
-  return (character_code) => {
-    console.log('character_code:', character_code)
-
-    return {
-      type: 'basic',
-      from: {
-        key_code: character_code,
-        modifiers: {
-          optional: ['any'],
-        },
+  return (character_code) => ({
+    type: 'basic',
+    from: {
+      key_code: character_code,
+      modifiers: {
+        optional: ['any'],
       },
-      to: [
-        {
-          key_code: first_key,
-        },
-        {
-          key_code: character_code,
-        },
-        {
-          key_code: 'vk_none',
-        },
-      ],
-      conditions: [
-        {
-          type: 'variable_if',
-          name: mode_name,
-          value: 1,
-        },
-      ],
-    }
-  }
+    },
+    to: [
+      {
+        key_code: first_key,
+      },
+      {
+        key_code: character_code,
+      },
+      {
+        key_code: 'vk_none',
+      },
+    ],
+    conditions: [
+      {
+        type: 'variable_if',
+        name: mode_name,
+        value: 1,
+      },
+    ],
+  })
 }
 
 // escape
