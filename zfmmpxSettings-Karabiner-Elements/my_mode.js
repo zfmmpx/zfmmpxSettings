@@ -35,12 +35,20 @@ const d_mo_data = [
 ]
 
 const v_mo_data = [
+  ['h', 'left_arrow', ['left_shift', 'left_option']],
+  ['j', 'down_arrow', ['left_shift']],
+  ['k', 'up_arrow', ['left_shift']],
+  ['l', 'right_arrow', ['left_shift', 'left_option']],
+  // ['left_command', 'left_command'],
+  // ['right_command', 'left_command'],
+]
+const v_mo_data2 = [
   ['h', 'left_arrow', ['left_shift']],
   ['j', 'down_arrow', ['left_shift']],
   ['k', 'up_arrow', ['left_shift']],
   ['l', 'right_arrow', ['left_shift']],
-  ['left_command', 'left_command'],
-  ['right_command', 'left_command'],
+  // ['left_command', 'left_command'],
+  // ['right_command', 'left_command'],
 ]
 
 const disable_settings_data = [
@@ -62,7 +70,7 @@ const disable_settings_data = [
   // ["slash", "shift"]
 ]
 
-const normal_characters_data = [
+const normal_characters_data_d = [
   'a',
   'b',
   'c',
@@ -70,6 +78,28 @@ const normal_characters_data = [
   'f',
   'g',
   'i',
+  'o',
+  'p',
+  'q',
+  'r',
+  't',
+  'u',
+  'w',
+  'x',
+  'y',
+  'z',
+]
+
+const normal_characters_data_v = [
+  'a',
+  'b',
+  'c',
+  'e',
+  'f',
+  'g',
+  'i',
+  'm',
+  'n',
   'o',
   'p',
   'q',
@@ -154,7 +184,7 @@ const vKey = {
   ],
   to_if_alone: [
     {
-      key_code: 'vk_none',
+      key_code: 'v',
     },
   ],
   to_after_key_up: [
@@ -165,72 +195,9 @@ const vKey = {
       },
     },
   ],
-  conditions: [
-    {
-      type: 'variable_if',
-      name: 'd_mo',
-      value: 1,
-    },
-  ],
 }
 
-const vJ = {
-  type: 'basic',
-  from: {
-    key_code: 'j',
-    modifiers: {
-      mandatory: ['option'],
-    },
-  },
-  to: [
-    {
-      key_code: 'down_arrow',
-      modifiers: ['left_shift'],
-    },
-  ],
-  to_after_key_up: [
-    {
-      key_code: 'vk_none',
-    },
-  ],
-  conditions: [
-    {
-      type: 'variable_if',
-      name: 'v_mo',
-      value: 1,
-    },
-  ],
-}
-
-const vK = {
-  type: 'basic',
-  from: {
-    key_code: 'k',
-    modifiers: {
-      mandatory: ['option'],
-    },
-  },
-  to: [
-    {
-      key_code: 'up_arrow',
-      modifiers: ['left_shift'],
-    },
-  ],
-  to_after_key_up: [
-    {
-      key_code: 'vk_none',
-    },
-  ],
-  conditions: [
-    {
-      type: 'variable_if',
-      name: 'v_mo',
-      value: 1,
-    },
-  ],
-}
-
-const vDisableOtherKey = {
+const d_vDisableOtherKey = {
   type: 'basic',
   from: {
     any: 'key_code',
@@ -243,6 +210,11 @@ const vDisableOtherKey = {
   conditions: [
     {
       type: 'variable_if',
+      name: 'd_mo',
+      value: 1,
+    },
+    {
+      type: 'variable_if',
       name: 'v_mo',
       value: 1,
     },
@@ -250,14 +222,23 @@ const vDisableOtherKey = {
 }
 
 // 所有 一般规则的键 的集合
-const whole_data = [d_mo_data, v_mo_data, disable_settings_data, normal_characters_data]
+const whole_data = [
+  d_mo_data,
+  v_mo_data,
+  v_mo_data2,
+  disable_settings_data,
+  normal_characters_data_d,
+  normal_characters_data_v,
+]
 
 // 所有 一般规则的生成方程 的集合
 const funcArr = [
   generate_d_mo_single_rule,
   generate_v_mo_single_rule,
+  generate_v_mo_single_rule2,
   generate_disable_settings_single_rule,
-  generate_normal_characters_single_rule,
+  generate_normal_characters_single_rule('d', 'd_mo'),
+  generate_normal_characters_single_rule('v', 'v_mo'),
 ]
 
 // 总的生成方程(包括一般规则和特殊规则), 需要区分顺序,顺序是: dKey => sKey => vKey =>  vJ => vK => d_mo的所有规则 => v_mo的所有规则 => vDisableOtherKey => 所有的disable_settings => 所有的normal_character
@@ -270,13 +251,13 @@ function generate() {
         result.push(singleRule)
       })
 
-      if (currIndex == 1) {
-        result.push(vDisableOtherKey)
+      if (currIndex == 2) {
+        result.push(d_vDisableOtherKey)
       }
 
       return result
     },
-    [dKey, sKey, vKey, vJ, vK],
+    [dKey, sKey, vKey],
   )
 }
 
@@ -334,7 +315,6 @@ function generate_d_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
 }
 
 function generate_v_mo_single_rule(from_key_code, to_key_code, to_modifier_key_code_array) {
-  console.log('to_modifier_key_code_array:', to_modifier_key_code_array)
   const result = {
     type: 'basic',
     from: {
@@ -358,6 +338,48 @@ function generate_v_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
       {
         type: 'variable_if',
         name: 'v_mo',
+        value: 1,
+      },
+      {
+        type: 'variable_if',
+        name: 'd_mo',
+        value: 0,
+      },
+    ],
+  }
+
+  return result
+}
+
+function generate_v_mo_single_rule2(from_key_code, to_key_code, to_modifier_key_code_array) {
+  const result = {
+    type: 'basic',
+    from: {
+      key_code: from_key_code,
+      modifiers: {
+        optional: ['any'],
+      },
+    },
+    to: [
+      {
+        key_code: to_key_code,
+        modifiers: to_modifier_key_code_array,
+      },
+    ],
+    to_after_key_up: [
+      {
+        key_code: 'vk_none',
+      },
+    ],
+    conditions: [
+      {
+        type: 'variable_if',
+        name: 'v_mo',
+        value: 1,
+      },
+      {
+        type: 'variable_if',
+        name: 'd_mo',
         value: 1,
       },
     ],
@@ -394,44 +416,78 @@ function generate_disable_settings_single_rule(from_key_code, from_modifier_key_
   return result
 }
 
-function generate_normal_characters_single_rule(character_code) {
-  const result = {
-    type: 'basic',
-    from: {
-      key_code: character_code,
-      modifiers: {
-        optional: ['any'],
-      },
-    },
-    to: [
-      {
-        key_code: 'd',
-      },
-      {
-        key_code: character_code,
-      },
-      {
-        key_code: 'vk_none',
-      },
-    ],
-    conditions: [
-      {
-        type: 'variable_if',
-        name: 'd_mo',
-        value: 1,
-      },
-    ],
-  }
+function generate_normal_characters_single_rule(first_key, mode_name) {
+  console.log('first_key:', first_key)
 
-  return result
+  return (character_code) => {
+    console.log('character_code:', character_code)
+
+    return {
+      type: 'basic',
+      from: {
+        key_code: character_code,
+        modifiers: {
+          optional: ['any'],
+        },
+      },
+      to: [
+        {
+          key_code: first_key,
+        },
+        {
+          key_code: character_code,
+        },
+        {
+          key_code: 'vk_none',
+        },
+      ],
+      conditions: [
+        {
+          type: 'variable_if',
+          name: mode_name,
+          value: 1,
+        },
+      ],
+    }
+  }
+}
+
+// escape
+function generate2() {
+  return [
+    {
+      type: 'basic',
+      from: {
+        key_code: 'caps_lock',
+        modifiers: {
+          optional: ['any'],
+        },
+      },
+      to: [
+        {
+          key_code: 'left_control',
+          modifiers: ['left_shift'],
+        },
+      ],
+      to_if_alone: [
+        {
+          key_code: 'escape',
+        },
+      ],
+    },
+  ]
 }
 
 const wholeRules = {
-  title: '2 d_mo',
+  title: '1 my mode',
   rules: [
     {
-      description: '2 d_mo',
+      description: '1 d_mo',
       manipulators: generate(),
+    },
+    {
+      description: '2 方向键escape键以及功能键(f键)修改',
+      manipulators: generate2(),
     },
   ],
 }
