@@ -39,6 +39,8 @@ const v_mo_data = [
   ['j', 'down_arrow', ['left_shift']],
   ['k', 'up_arrow', ['left_shift']],
   ['l', 'right_arrow', ['left_shift']],
+  ['left_command', 'left_command'],
+  ['right_command', 'left_command'],
 ]
 
 const disable_settings_data = [
@@ -75,29 +77,6 @@ const normal_characters_data_d = [
   't',
   'u',
   'v',
-  'w',
-  'x',
-  'y',
-  'z',
-]
-
-const normal_characters_data_v = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'i',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  't',
-  'u',
   'w',
   'x',
   'y',
@@ -297,7 +276,7 @@ function generate() {
         result.push(singleRule)
       })
 
-      if (currIndex == 2) {
+      if (currIndex == 1) {
         result.push(d_vDisableOtherKey)
       }
 
