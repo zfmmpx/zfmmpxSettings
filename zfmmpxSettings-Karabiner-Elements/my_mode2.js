@@ -32,6 +32,7 @@ const d_mo_data = [
   // ['down_arrow', 'f17', ['left_control', 'left_option', 'left_command']],
   // ['up_arrow', 'f18', ['left_control', 'left_option', 'left_command']],
   ['return_or_enter', 'return_or_enter', ['left_command']],
+  ['spacebar', 'return_or_enter'],
 ]
 
 const v_mo_data = [
@@ -41,25 +42,6 @@ const v_mo_data = [
   ['l', 'right_arrow', ['left_shift']],
   ['left_command', 'left_command'],
   ['right_command', 'left_command'],
-]
-
-const disable_settings_data = [
-  // ["delete_or_backspace"],
-  // ["7", "shift"],
-  // ["8", "shift"],
-  // ["9", "shift"],
-  // ["0", "shift"],
-  // ["grave_accent_and_tilde", "shift"],
-  // ["hyphen", "shift"],
-  // ["equal_sign", "shift"],
-  // ["open_bracket", "shift"],
-  // ["close_bracket", "shift"],
-  // ["backslash", "shift"],
-  // ["semicolon", "shift"],
-  // ["quote", "shift"],
-  // ["comma", "shift"],
-  // ["period", "shift"],
-  // ["slash", "shift"]
 ]
 
 const normal_characters_data_d = [
@@ -111,6 +93,33 @@ const dKey = {
         name: 'd_mo',
         value: 0,
       },
+    },
+  ],
+}
+
+const kKey = {
+  type: 'basic',
+  from: {
+    key_code: 'k',
+    modifiers: {
+      optional: ['any'],
+    },
+  },
+  to: [
+    {
+      key_code: 'left_command',
+    },
+  ],
+  to_if_alone: [
+    {
+      key_code: 'k',
+    },
+  ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'd_mo',
+      value: 0,
     },
   ],
 }
@@ -189,11 +198,6 @@ const vJ = {
       modifiers: ['left_shift'],
     },
   ],
-  to_after_key_up: [
-    {
-      key_code: 'vk_none',
-    },
-  ],
   conditions: [
     {
       type: 'variable_if',
@@ -215,11 +219,6 @@ const vK = {
     {
       key_code: 'up_arrow',
       modifiers: ['left_shift'],
-    },
-  ],
-  to_after_key_up: [
-    {
-      key_code: 'vk_none',
     },
   ],
   conditions: [
@@ -256,17 +255,17 @@ const d_vDisableOtherKey = {
 }
 
 // 所有 一般规则的键 的集合
-const whole_data = [d_mo_data, v_mo_data, disable_settings_data, normal_characters_data_d]
+const whole_data = [d_mo_data, v_mo_data, normal_characters_data_d]
 
 // 所有 一般规则的生成方程 的集合
 const funcArr = [
   generate_d_mo_single_rule,
   generate_v_mo_single_rule,
-  generate_disable_settings_single_rule,
   generate_normal_characters_single_rule('d', 'd_mo'),
 ]
 
-// 总的生成方程(包括一般规则和特殊规则), 需要区分顺序,顺序是: dKey => sKey => vKey =>  vJ => vK => d_mo的所有规则 => v_mo的所有规则 => vDisableOtherKey => 所有的disable_settings => 所有的normal_character
+// 总的生成方程(包括一般规则和特殊规则), 需要区分顺序,顺序是: dKey => sKey => vKey => vJ => vK => d_mo_data的所有规则 =>
+// v_mo_data的所有规则 => d_vDisableOtherKey => 所有的normal_characters_data_d
 function generate() {
   // new
   return whole_data.reduce(
@@ -282,7 +281,7 @@ function generate() {
 
       return result
     },
-    [dKey, sKey, vKey, vJ, vK],
+    [dKey, kKey, sKey, vKey, vJ, vK],
   )
 }
 
@@ -341,11 +340,6 @@ function generate_v_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
         modifiers: to_modifier_key_code_array,
       },
     ],
-    to_after_key_up: [
-      {
-        key_code: 'vk_none',
-      },
-    ],
     conditions: [
       {
         type: 'variable_if',
@@ -356,34 +350,6 @@ function generate_v_mo_single_rule(from_key_code, to_key_code, to_modifier_key_c
         type: 'variable_if',
         name: 'v_mo',
         value: 1,
-      },
-    ],
-  }
-
-  return result
-}
-
-function generate_disable_settings_single_rule(from_key_code, from_modifier_key_code_array) {
-  let modifiersObj = {}
-  if (from_modifier_key_code_array) {
-    modifiersObj = {
-      optional: ['caps_lock'],
-      mandatory: from_modifier_key_code_array,
-    }
-  } else {
-    modifiersObj = {
-      optional: ['caps_lock'],
-    }
-  }
-  const result = {
-    type: 'basic',
-    from: {
-      key_code: from_key_code,
-      modifiers: modifiersObj,
-    },
-    to: [
-      {
-        key_code: 'vk_none',
       },
     ],
   }
@@ -408,7 +374,7 @@ function generate_normal_characters_single_rule(first_key, mode_name) {
         key_code: character_code,
       },
       {
-        key_code: 'vk_none',
+        key_code: 'vk_none', // 这里不可去掉，如果去掉的话当按住d再按住i会打出「diiiii....」 不去掉的话会正常打出「di」
       },
     ],
     conditions: [
@@ -447,6 +413,29 @@ function generate2() {
   ]
 }
 
+// escape
+function generate3() {
+  const rules = [
+    ['escape', 'mission_control'],
+    ['f1', 'launchpad'],
+  ]
+
+  return rules.map((v) => ({
+    type: 'basic',
+    from: {
+      key_code: v[0],
+      modifiers: {
+        optional: ['any'],
+      },
+    },
+    to: [
+      {
+        key_code: v[1],
+      },
+    ],
+  }))
+}
+
 const wholeRules = {
   title: '1 my mode',
   rules: [
@@ -455,8 +444,12 @@ const wholeRules = {
       manipulators: generate(),
     },
     {
-      description: '2 方向键escape键以及功能键(f键)修改',
+      description: '2 escape修改',
       manipulators: generate2(),
+    },
+    {
+      description: '3 功能键(f键)修改',
+      manipulators: generate3(),
     },
   ],
 }
