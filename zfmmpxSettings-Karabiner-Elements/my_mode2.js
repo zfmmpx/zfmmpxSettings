@@ -31,8 +31,8 @@ const d_mo_data = [
   // ['right_arrow', 'f19', ['left_control', 'left_option', 'left_command']],
   // ['down_arrow', 'f17', ['left_control', 'left_option', 'left_command']],
   // ['up_arrow', 'f18', ['left_control', 'left_option', 'left_command']],
-  ['return_or_enter', 'return_or_enter', ['left_command']],
-  ['spacebar', 'return_or_enter'],
+  // ['return_or_enter', 'return_or_enter', ['left_command']],
+  // ['spacebar', 'return_or_enter'],
 ]
 
 const v_mo_data = [
@@ -63,6 +63,8 @@ const normal_characters_data_d = [
   'x',
   'y',
   'z',
+  'return_or_enter',
+  'spacebar',
 ]
 
 // 特殊规则
@@ -160,11 +162,6 @@ const vKey = {
         name: 'v_mo',
         value: 1,
       },
-    },
-  ],
-  to_if_alone: [
-    {
-      key_code: 'v',
     },
   ],
   to_after_key_up: [
@@ -373,7 +370,7 @@ function generate() {
 
       return result
     },
-    [dKey, kKey, sKey, vKey, vJ, vK, vCommandH, vCommandJ, vCommandK, vCommandL],
+    [dKey, sKey, vKey, vJ, vK, vCommandH, vCommandJ, vCommandK, vCommandL],
   )
 }
 
@@ -509,7 +506,9 @@ function generate2() {
 function generate3() {
   const rules = [
     ['escape', 'mission_control'],
-    ['f1', 'launchpad'],
+    ['f1', 'left_arrow', ['left_control']],
+    ['f2', 'right_arrow', ['left_control']],
+    ['f4', 'launchpad'],
   ]
 
   return rules.map((v) => ({
@@ -523,6 +522,7 @@ function generate3() {
     to: [
       {
         key_code: v[1],
+        modifiers: v[2],
       },
     ],
   }))

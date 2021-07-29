@@ -12,7 +12,7 @@
     "flow-typed": true
   },
   // 设置Format Document With为prettier，并且下载vs code的prettier插件，把下面这一项设置为true，就可以用prettier去格式化
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
 
   // eslint
   "editor.codeActionsOnSave": {
