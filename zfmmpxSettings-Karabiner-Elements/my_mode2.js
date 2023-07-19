@@ -353,6 +353,7 @@ const funcArr = [
   generate_normal_characters_single_rule('d', 'd_mo'),
 ]
 
+// 1. d_mo
 // 总的生成方程(包括一般规则和特殊规则), 需要区分顺序,顺序是: dKey => sKey => vKey => vJ => vK => d_mo_data的所有规则 =>
 // v_mo_data的所有规则 => d_vDisableOtherKey => 所有的normal_characters_data_d
 function generate() {
@@ -476,7 +477,7 @@ function generate_normal_characters_single_rule(first_key, mode_name) {
   })
 }
 
-// escape
+// 2. caps_lock改成escape
 function generate2() {
   return [
     {
@@ -502,13 +503,31 @@ function generate2() {
   ]
 }
 
-// escape
+// 3 其他单个键修改k
 function generate3() {
   const rules = [
-    ['escape', 'mission_control'],
-    ['f1', 'left_arrow', ['left_control']],
-    ['f2', 'right_arrow', ['left_control']],
-    ['f4', 'launchpad'],
+    // ['fn', 'left_control'],
+    // ['left_control', 'fn'],
+    ['non_us_backslash', 'grave_accent_and_tilde'],
+    ['grave_accent_and_tilde', 'non_us_backslash'],
+    ['escape', 'fn'],
+    ['fn', 'escape'],
+    // ['f1', 'i', ['left_command', 'left_option']],
+    // ['f2', 'c', ['left_command', 'left_shift']],
+
+    // ['f7', 'rewind'],
+    // ['f8', 'play_or_pause'],
+    // ['f9', 'fast_forward'],
+    // ['f10', 'mute'],
+    // ['f11', 'volume_decrement'],
+    // ['f12', 'volume_increment'],
+
+    // ['rewind', 'f7'],
+    // ['play_or_pause', 'f8'],
+    // ['fast_forward', 'f9'],
+    // ['mute', 'f10'],
+    // ['volume_decrement', 'f11'],
+    // ['volume_increment', 'f12'],
   ]
 
   return rules.map((v) => ({
@@ -532,15 +551,15 @@ const wholeRules = {
   title: '1 my mode',
   rules: [
     {
-      description: '1 d_mo',
+      description: '1. d_mo new',
       manipulators: generate(),
     },
     {
-      description: '2 escape修改',
+      description: '2. caps_lock改成escape new',
       manipulators: generate2(),
     },
     {
-      description: '3 功能键(f键)修改',
+      description: '3. 其他单个键修改 new',
       manipulators: generate3(),
     },
   ],
