@@ -375,6 +375,234 @@ function generate() {
   )
 }
 
+// 特殊规则
+const mouseKeysFullOff = {
+  type: 'basic',
+  from: {
+    key_code: 'f1',
+    modifiers: {
+      optional: ['any'],
+    },
+  },
+  to: [
+    {
+      set_variable: {
+        name: 'mouse_keys_full',
+        value: 1,
+      },
+    },
+  ],
+  // to_if_alone: [
+  //   {
+  //     key_code: 'e',
+  //   },
+  // ],
+  // to_after_key_up: [
+  //   {
+  //     set_variable: {
+  //       name: 'mouse_keys_full',
+  //       value: 0,
+  //     },
+  //   },
+  // ],
+}
+const mouseKeysFullOn = {
+  type: 'basic',
+  from: {
+    key_code: 'f2',
+    modifiers: {
+      optional: ['any'],
+    },
+  },
+  to: [
+    {
+      set_variable: {
+        name: 'mouse_keys_full',
+        value: 0,
+      },
+    },
+  ],
+  // conditions: [
+  //   {
+  //     type: 'variable_if',
+  //     name: 'mouse_keys_full',
+  //     value: 0,
+  //   },
+  // ],
+}
+const mouseKeysFullSlow = {
+  type: 'basic',
+  from: {
+    key_code: 'f',
+    modifiers: {
+      optional: ['any'],
+    },
+  },
+  to: [
+    {
+      mouse_key: {
+        speed_multiplier: 0.1,
+      },
+    },
+  ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'mouse_keys_full',
+      value: 1,
+    },
+  ],
+}
+const mouseKeysFullFast = {
+  type: 'basic',
+  from: {
+    key_code: 'e',
+    modifiers: {
+      optional: ['any'],
+    },
+  },
+  to: [
+    {
+      mouse_key: {
+        speed_multiplier: 2,
+      },
+    },
+  ],
+  conditions: [
+    {
+      type: 'variable_if',
+      name: 'mouse_keys_full',
+      value: 1,
+    },
+  ],
+}
+const mouseKeysFullScroll = {
+  type: 'basic',
+  from: {
+    key_code: 's',
+    modifiers: {
+      optional: ['any'],
+    },
+  },
+  to: [
+    {
+      set_variable: {
+        name: 'mouse_keys_full_scroll',
+        value: 1,
+      },
+    },
+  ],
+  to_if_alone: [
+    {
+      key_code: 's',
+    },
+  ],
+  to_after_key_up: [
+    {
+      set_variable: {
+        name: 'mouse_keys_full_scroll',
+        value: 0,
+      },
+    },
+  ],
+  // conditions: [
+  //   {
+  //     type: 'variable_if',
+  //     name: 'mouse_keys_full',
+  //     value: 1,
+  //   },
+  // ],
+}
+
+const mouse_keys_mo_move_data = [
+  ['h', { mouse_key: { x: -4000 } }],
+  ['j', { mouse_key: { y: 4000 } }],
+  ['k', { mouse_key: { y: -4000 } }],
+  ['l', { mouse_key: { x: 4000 } }],
+
+  // ['u', { mouse_key: { x: -4000, y: -4000 } }],
+  // ['m', { mouse_key: { x: -4000, y: 4000 } }],
+  // ['period', { mouse_key: { x: 4000, y: 4000 } }],
+  // ['o', { mouse_key: { x: 4000, y: -4000 } }],
+  ['semicolon', { pointing_button: 'button1' }],
+  ['quote', { pointing_button: 'button2' }],
+]
+const mouse_keys_mo_scroll_data = [
+  ['h', { mouse_key: { horizontal_wheel: 26 } }],
+  ['j', { mouse_key: { vertical_wheel: 26 } }],
+  ['k', { mouse_key: { vertical_wheel: -26 } }],
+  ['l', { mouse_key: { horizontal_wheel: -26 } }],
+]
+
+// 所有 mouse_keys_mo的键 的集合
+const whole_mouse_keys_mo_data = [mouse_keys_mo_move_data]
+function generate4() {
+  return whole_mouse_keys_mo_data.reduce(
+    (result, curr, currIndex) => {
+      if (currIndex === 0) {
+        result = result.concat(
+          curr.map((v, vIndex) => {
+            const [key_code, toItem] = v
+            return {
+              type: 'basic',
+              from: {
+                key_code,
+                modifiers: {
+                  optional: ['any'],
+                },
+              },
+              to: [toItem],
+              conditions: [
+                {
+                  type: 'variable_if',
+                  name: 'mouse_keys_full',
+                  value: 1,
+                },
+                // {
+                //   type: 'variable_if',
+                //   name: 'mouse_keys_full_scroll',
+                //   value: 0,
+                // },
+              ],
+            }
+          }),
+        )
+      } else if (currIndex === 1) {
+        result = result.concat(
+          curr.map((v, vIndex) => {
+            const [key_code, toItem] = v
+            return {
+              type: 'basic',
+              from: {
+                key_code,
+                modifiers: {
+                  optional: ['any'],
+                },
+              },
+              to: [toItem],
+              conditions: [
+                {
+                  type: 'variable_if',
+                  name: 'mouse_keys_full',
+                  value: 0,
+                },
+                {
+                  type: 'variable_if',
+                  name: 'mouse_keys_full_scroll',
+                  value: 1,
+                },
+              ],
+            }
+          }),
+        )
+      }
+
+      return result
+    },
+    [mouseKeysFullOff, mouseKeysFullOn, mouseKeysFullSlow, mouseKeysFullFast],
+  )
+}
+
 // 一般规则的生成方程
 function generate_d_mo_single_rule(from_key_code, to_key_code, to_modifier_key_code_array) {
   let toArr = []
@@ -508,10 +736,11 @@ function generate3() {
   const rules = [
     // ['fn', 'left_control'],
     // ['left_control', 'fn'],
-    ['non_us_backslash', 'grave_accent_and_tilde'],
-    ['grave_accent_and_tilde', 'non_us_backslash'],
-    ['escape', 'fn'],
-    ['fn', 'escape'],
+    // ['non_us_backslash', 'grave_accent_and_tilde'],
+    // ['grave_accent_and_tilde', 'non_us_backslash'],
+    // ['escape', 'fn'],
+    ['escape', 'spacebar', ['left_control']],
+    // ['fn', 'escape'],
     // ['f1', 'i', ['left_command', 'left_option']],
     // ['f2', 'c', ['left_command', 'left_shift']],
 
@@ -561,6 +790,10 @@ const wholeRules = {
     {
       description: '3. 其他单个键修改 new',
       manipulators: generate3(),
+    },
+    {
+      description: '4. mouse_key new',
+      manipulators: generate4(),
     },
   ],
 }

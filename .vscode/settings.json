@@ -16,7 +16,7 @@
 
   // eslint
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   // "eslint.autoFixOnSave": true,
   "eslint.validate": ["javascript", "javascriptreact", "html", "vue"],

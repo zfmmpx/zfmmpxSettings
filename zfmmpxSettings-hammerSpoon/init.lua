@@ -109,7 +109,7 @@ function dump(o)
 end
 
 function layoutMiddle()
-    local W_FACTOR = 95
+    local W_FACTOR = 50
     local app_chrome = hs.application.find("Code")
     if (app_chrome) then
         local window_chrome = app_chrome:focusedWindow()
@@ -126,10 +126,10 @@ function layoutMiddle()
 
         window_chrome:setFrame(f)
     else
-        hs.alert.show("app_Code还没启动")
+        hs.alert.show("app_chrome还没启动")
     end
 
-    local app_Code = hs.application.find("Google Chrome")
+    local app_Code = hs.application.find("Google Chrome Dev")
     if (app_Code) then
         local app_Code = app_Code:focusedWindow()
         local f = app_Code:frame() -- 获得当前窗口的 h w x y
@@ -145,7 +145,7 @@ function layoutMiddle()
 
         app_Code:setFrame(f)
     else
-        hs.alert.show("app_chrome还没启动")
+        hs.alert.show("app_Code还没启动")
     end
 end
 
@@ -560,7 +560,7 @@ end, true)
 
 
 myBind({ "ctrl", "shift" }, "V", function() hs.application.open("/Applications/Visual Studio Code.app") end)
-myBind({ "ctrl", "shift" }, "C", function() hs.application.open("/Applications/Google Chrome.app") end)
+myBind({ "ctrl", "shift" }, "C", function() hs.application.open("/Applications/Google Chrome Dev.app") end)
 myBind({ "ctrl", "shift" }, "P", function()
     hs.applescript(
         [[ tell application "System Preferences"
