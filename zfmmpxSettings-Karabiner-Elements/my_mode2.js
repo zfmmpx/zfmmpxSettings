@@ -776,6 +776,71 @@ function generate3() {
   }))
 }
 
+// 3. 修改escape old
+function generateEsc() {
+  const rules = [['escape', 'spacebar', ['left_control', 'left_command', 'left_shift']]]
+
+  return rules.map((v) => ({
+    type: 'basic',
+    from: {
+      key_code: v[0],
+      modifiers: {
+        optional: ['any'],
+      },
+    },
+    to: [
+      {
+        key_code: v[1],
+        modifiers: v[2],
+      },
+    ],
+    to_after_key_up: [
+      {
+        key_code: 'vk_none',
+      },
+    ],
+    to_if_held_down: [
+      {
+        key_code: 'vk_none',
+      },
+    ],
+    to_delayed_action: {
+      to_if_invoked: [
+        {
+          key_code: 'vk_none',
+        },
+      ],
+      to_if_canceled: [{ key_code: 'vk_none' }],
+    },
+  }))
+}
+
+// 3. 修改escape new
+function generateEscXXX() {
+  const rules = [
+    ['escape', 'com.apple.keylayout.ABC'],
+    // ['fn', 'com.apple.inputmethod.TCIM.Pinyin'],
+    ['fn', 'com.apple.inputmethod.SCIM.ITABC'],    
+  ]
+
+  return rules.map((v) => ({
+    type: 'basic',
+    from: {
+      key_code: v[0],
+      modifiers: {
+        optional: ['any'],
+      },
+    },
+    to: [
+      {
+        select_input_source: {
+          input_source_id: v[1],
+        },
+      },
+    ],
+  }))
+}
+
 const wholeRules = {
   title: '1 my mode',
   rules: [
@@ -788,13 +853,13 @@ const wholeRules = {
       manipulators: generate2(),
     },
     {
-      description: '3. 其他单个键修改 new',
-      manipulators: generate3(),
+      description: '3. 修改escape new',
+      manipulators: generateEsc(),
     },
-    {
-      description: '4. mouse_key new',
-      manipulators: generate4(),
-    },
+    // {
+    //   description: '4. mouse_key new',
+    //   manipulators: generate4(),
+    // },
   ],
 }
 
