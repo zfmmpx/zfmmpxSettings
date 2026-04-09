@@ -95,29 +95,18 @@ function layoutMiddleXXX(position)
     end
 end
 
-function dump(o)
-    if type(o) == 'table' then
-        local s = '{ '
-        for k, v in pairs(o) do
-            if type(k) ~= 'number' then k = '"' .. k .. '"' end
-            s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-        end
-        return s .. '} '
-    else
-        return tostring(o)
-    end
-end
-
 function layoutMiddle()
-    local W_FACTOR = 50
-    local app_chrome = hs.application.find("Code")
+    -- local W_FACTOR = 50
+    local VS_CODE_FACTOR = 53
+    local CHROME_FACTOR = 53
+    local app_chrome = hs.application.find("Cursor")
     if (app_chrome) then
         local window_chrome = app_chrome:focusedWindow()
         local f = window_chrome:frame() -- 获得当前窗口的 h w x y
         local screen = window_chrome:screen() -- 获得当前窗口所在的屏幕
         local f_current = screen:frame() -- 获得当前屏幕的 h w x y
 
-        local wScale = W_FACTOR / 100
+        local wScale = VS_CODE_FACTOR / 100
         local hScale = 1
         f.x = f_current.x
         f.y = f_current.y
@@ -136,9 +125,9 @@ function layoutMiddle()
         local screen = app_Code:screen() -- 获得当前窗口所在的屏幕
         local f_current = screen:frame() -- 获得当前屏幕的 h w x y
 
-        local wScale = W_FACTOR / 100
+        local wScale = CHROME_FACTOR / 100
         local hScale = 1
-        f.x = f_current.x + (100 - W_FACTOR) / 100 * f_current.w
+        f.x = f_current.x + (100 - CHROME_FACTOR) / 100 * f_current.w
         f.y = f_current.y
         f.w = f_current.w * wScale
         f.h = f_current.h * hScale
@@ -318,7 +307,7 @@ function tileOrderly()
     local screen = win:screen() -- 获得当前窗口所在的屏幕
     local f_current = screen:frame()
 
-    local app_code = hs.application.find("Code")
+    local app_code = hs.application.find("Cursor")
     local win1 = app_code:focusedWindow()
     local f1 = win1:frame() -- 获得当前窗口的 h w x y
     f1.w = f_current.w / 2
@@ -358,14 +347,14 @@ function moveTo(position)
             f.x = f_current.x
             win:setFrame(f)
         elseif (position == 'rightLeft') then
-            local app_code = hs.application.find("Code")
+            local app_code = hs.application.find("Cursor")
             local win = app_code:focusedWindow()
             local f = win:frame() -- 获得当前窗口的 h w x y
             f.w = f.w * 1.05
             f.x = f_current.x + f_current.w - f.w
             win:setFrame(f)
         elseif (position == 'rightRight') then
-            local app_code = hs.application.find("Code")
+            local app_code = hs.application.find("Cursor")
             local win = app_code:focusedWindow()
             local f = win:frame() -- 获得当前窗口的 h w x y
             f.w = f.w * 0.95
@@ -385,7 +374,7 @@ function codeUp()
     {
         -- try 代码块
         function()
-            local app_code = hs.application.find("Code")
+            local app_code = hs.application.find("Cursor")
             local window_code = app_code:focusedWindow()
             local screen_code = window_code:screen()
             local screen_4k = hs.screen.find("U2790B")
@@ -459,11 +448,11 @@ myBind({ "ctrl", "shift" }, "Y", layoutFull) -- 下
 myBind({ "ctrl", "shift" }, "K", function() hs.window.filter.focusEast() end, nil,
     function() hs.window.filter.focusEast() end) -- 右
 
--- 移动窗口
-myBind({ "ctrl" }, "H", moveLeft, nil, moveLeft)
-myBind({ "ctrl" }, "J", moveDown, nil, moveDown)
-myBind({ "ctrl" }, "K", moveUp, nil, moveUp)
-myBind({ "ctrl" }, "L", moveRight, nil, moveRight)
+-- -- 移动窗口
+-- myBind({ "ctrl" }, "H", moveLeft, nil, moveLeft)
+-- myBind({ "ctrl" }, "J", moveDown, nil, moveDown)
+-- myBind({ "ctrl" }, "K", moveUp, nil, moveUp)
+-- myBind({ "ctrl" }, "L", moveRight, nil, moveRight)
 
 -- 顺序排列当前屏幕窗口(调用hyper3用到的tile函数,不过只是tile当前的屏幕)
 myBind({ "ctrl", "shift" }, ";", tileOrderly) -- f5
@@ -477,22 +466,22 @@ myBind({ "ctrl", "shift" }, ";", tileOrderly) -- f5
 -- codeUp
 -- myBind({"ctrl", "shift"}, "T", codeUp)
 
--- -- 窗口都最小
-myBind({ "ctrl" }, "/", function() -- cmd+左
-    for _, wins in ipairs(winf_noInv:getWindows()) do
-        wins:minimize()
-    end
-end)
--- -- 窗口都恢复
-myBind({ "ctrl" }, "'", function() -- cmd 左
-    local list = hs.window.filter.new():setDefaultFilter({ visible = false }):setAppFilter("Hammerspoon", {}):getWindows()
-    hs.alert.show(#list)
+-- -- -- 窗口都最小
+-- myBind({ "ctrl" }, "/", function() -- cmd+左
+--     for _, wins in ipairs(winf_noInv:getWindows()) do
+--         wins:minimize()
+--     end
+-- end)
+-- -- -- 窗口都恢复
+-- myBind({ "ctrl" }, "'", function() -- cmd 左
+--     local list = hs.window.filter.new():setDefaultFilter({ visible = false }):setAppFilter("Hammerspoon", {}):getWindows()
+--     hs.alert.show(#list)
 
-    -- hammerspoon这个app比较特殊, 在default里面已经设置过, 现在将他设置为Hammerspoon = {},
-    for _, window in ipairs(list) do
-        window:unminimize()
-    end
-end)
+--     -- hammerspoon这个app比较特殊, 在default里面已经设置过, 现在将他设置为Hammerspoon = {},
+--     for _, window in ipairs(list) do
+--         window:unminimize()
+--     end
+-- end)
 
 
 
@@ -559,7 +548,7 @@ end, true)
 -- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 
 
-myBind({ "ctrl", "shift" }, "V", function() hs.application.open("/Applications/Visual Studio Code.app") end)
+myBind({ "ctrl", "shift" }, "V", function() hs.application.open("/Applications/Cursor.app") end)
 myBind({ "ctrl", "shift" }, "C", function() hs.application.open("/Applications/Google Chrome Dev.app") end)
 myBind({ "ctrl", "shift" }, "P", function()
     hs.applescript(
@@ -571,7 +560,7 @@ myBind({ "ctrl", "shift" }, "P", function()
 end)
 myBind({ "ctrl", "shift" }, "R", function()
     hs.applescript(
-        [[ tell application "iTerm"
+        [[ tell application "cmux"
             reopen
             activate
         end tell
@@ -595,5 +584,5 @@ function test()
     hs.reload()
 end
 
--- test
-myBind({ "ctrl" }, "R", test)
+-- -- test
+-- myBind({ "ctrl" }, "R", test)
