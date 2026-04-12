@@ -549,7 +549,7 @@ end, true)
 
 
 myBind({ "ctrl", "shift" }, "V", function() hs.application.open("/Applications/Cursor.app") end)
-myBind({ "ctrl", "shift" }, "C", function() hs.application.open("/Applications/Google Chrome Dev.app") end)
+myBind({ "ctrl", "shift" }, "C", function() hs.application.open("/Applications/Google Chrome.app") end)
 myBind({ "ctrl", "shift" }, "P", function()
     hs.applescript(
         [[ tell application "System Preferences"
